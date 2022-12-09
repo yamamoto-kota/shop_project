@@ -1,18 +1,36 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <!-- <el-form
+      status-icon
+      ref="ruleForm"
+      label-width="120px"
+      class="demo-ruleForm"
+    >
+      <el-form-item label="Password" prop="pass">
+        <el-input
+          type="password"
+          v-model="ruleForm.pass"
+          autocomplete="off"
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="Confirm" prop="checkPass">
+        <el-input
+          type="password"
+          v-model="ruleForm.checkPass"
+          autocomplete="off"
+        ></el-input>
+      </el-form-item>
+    </el-form> -->
+    <form action="#">
+      ユーザーID <input type="text" /> <input type="submit" value="ログイン" />
+    </form>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
-
+import { Component, Vue, Watch } from "vue-property-decorator";
 export default Vue.extend({
   name: "HomeView",
-  components: {
-    HelloWorld,
-  },
+  components: {},
 });
 </script>

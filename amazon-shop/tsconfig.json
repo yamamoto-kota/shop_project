@@ -11,13 +11,15 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
     "sourceMap": true,
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env"
+      "webpack-env",      
+      "node"
     ],
     "paths": {
       "@/*": [
-        "src/*"
+        "src/*",
       ]
     },
     "lib": [

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/sample.css"
+	th:href="@{/css/sample.css}" />
+<title>アンケート回答確認</title>
+</head>
+
+<body>
+	<script type="text/javascript" src="../static/js/header.js">
+		ヘッダーを表示
+	</script>
+
+	<!-- 本体部分 -->
+	<div class="p-2 bd-highlight" id="right">
+		<h1>アンケート回答確認</h1>
+		<div class="container margin-left: 1500px">
+			<br>
+			<p>
+				<font color="#808080">アンケート名</font>
+			</p>
+			<p>
+				<b><font size="5">2022年度定期検診・人間ドック受診前問診票</font></b>
+			</p>
+			<hr color="#C0C0C0">
+			<br>
+
+			<form action="0727V200_01.html" method="post">
+				<p>
+					<b><font size="4">・ 朝食を食べていますか？</font></b>
+				</p>
+				<p>
+					<font color="#808080"> 【択一】 【必須入力】</font>
+				</p>
+				<p>
+				<div class="form-check">
+					<p>
+						<input type="radio" name="whi" value="whi1" checked disabled>ほぼ毎日食べている
+					</p>
+					<p>
+						<input type="radio" name="whi" value="whi2" disabled>ときどき食べている
+					</p>
+					<p>
+						<input type="radio" name="whi" value="whi3" disabled>ほとんど食べない
+					</p>
+				</div>
+				<hr color="#C0C0C0">
+
+				<p>
+					<b><font size="4">・ 質問１で「ときどき食べている」「ほとんど食べてない」と答えた方のみ
+							：あなたが朝食を食べない理由として当てはまるものをすべてチェックしてください。</font></b>
+				</p>
+				<p>
+					<font color="#808080">【複数選択】</font>
+				</p>
+				<div class="form-check">
+					<p>
+						<input type="checkbox" name="rea" value="rea1" checked disabled>食べる習慣がないから
+					</p>
+					<p>
+						<input type="checkbox" name="rea" value="rea2" disabled>食べる時間がないから
+					</p>
+					<p>
+						<input type="checkbox" name="rea" value="rea3" checked disabled>おなかが空かないから
+					</p>
+					<p>
+						<input type="checkbox" name="rea" value="rea4" disabled>準備するのが面倒だから
+					</p>
+					<p>
+						<input type="checkbox" name="rea" value="rea5" disabled>食べない方が調子が良いから
+					</p>
+					<p>
+						<input type="checkbox" name="rea" value="rea6" disabled>ダイエットをしているから
+					</p>
+					<p>
+						<input type="checkbox" name="rea" value="rea7" disabled>その他
+					</p>
+				</div>
+				<hr color="#C0C0C0">
+
+				<p>
+					<b><font size="4">・質問２で「その他」をチェックした方のみ：理由を具体的にお書きください。</font></b>
+				</p>
+				<p>
+					<font color="#808080">【自由記述】</font>
+				</p>
+				<p>
+					<textarea class="form-control" name="reason" cols="40" rows="8" disabled></textarea>
+				</p>
+				<hr color="#C0C0C0">
+
+				<p class="text-center">
+					<a href="0727V200_01.html"><input class="btn btn-outline-primary my-1 btn-lg" type="submit"
+						value="送信" id="button2"></a>
+				</p>
+			</form>
+
+
+		</div>
+	</div>
+</body>
+</html>

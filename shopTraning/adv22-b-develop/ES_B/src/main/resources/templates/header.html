@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/sample.css"
+	th:href="@{/css/sample.css}" />
+<meta charset="UTF-8">
+<title>アンケート一覧</title>
+
+
+
+<header class="header">
+<nav class=" navbar-light bg-light">
+<div class="container-fluid ">
+<div class="row">
+<div class="col-3 mx-5 font-weight-bold font-italic  h2">ISID</div>
+<div class="col-3 ml-auto"></div>
+<div class="col-auto my-2 h5" th:text="${LOGINUSER.esqId}">esqId</div>
+<div class="col-auto my-2 h5" th:text="${LOGINUSER.userName}">name</div>
+<div class="ml-auto ">
+<a href="/logout">
+<input class="btn btn btn-primary my-1 mx-1" type="submit" value="ログアウト" /></a>
+</div>
+</div>
+</div>
+</nav>
+<nav class=" navbar-light bg-primary ">
+<div class="text-center ">
+<a class="navbar-brand  h3 text-white  " th:href="@{/list}">アンケート一覧</a>
+<div class="navbar-brand  h3 text-white">|</div>
+<a class="navbar-brand  h3 text-white" th:href="@{/edit/create}">アンケート作成</a>
+</div>
+<hr>
+</nav>
+</header>
+</head>
+
+</html>

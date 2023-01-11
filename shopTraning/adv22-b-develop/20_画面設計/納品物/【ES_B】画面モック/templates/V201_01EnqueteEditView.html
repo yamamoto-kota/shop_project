@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/sample.css"
+	th:href="@{/css/sample.css}" />
+<title>アンケート作成</title>
+</head>
+
+
+<body>
+	<script type="text/javascript" src="../static/js/header.js">
+		ヘッダーを表示
+	</script>
+
+	<!-- 本体部分 -->
+	<div class="p-2 bd-highlight" id="right">
+		<br>
+		<h1>&nbsp;アンケート作成</h1>
+		<div class="container margin-left: 1500px">
+
+			<!-- アンケート対象の事業部選択 -->
+			<br><div class="form-check"
+				style="display: inline-block; padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+				<p>
+					<b>アンケート対象事業部を選択してください</b>
+				</p>
+				<input type="checkbox">監査室 <input type="checkbox">経営企画本部
+				<input type="checkbox">コーポレート本部 <input type="checkbox">Xイノベーション本部
+				<br> <input type="checkbox">事業推進室 <input
+					type="checkbox">金融ソリューション事業部 <input type="checkbox">グループ経営ソリューション事業部
+				<br> <input type="checkbox">製造ソリューション事業部 <input
+					type="checkbox">コミュニケーションIT事業部 <input type="checkbox">エンタープライズIT事業部
+			</div>
+			<br><font color="red">事業は必須選択です</font>
+			<p>
+				<br> <font color="#808080">アンケート名 【必須】</font>
+			</p>
+			<div class="textBox">
+				<input class="text" type="text" placeholder="アンケート" maxlength="100" value="アンケートA" />
+			</div>
+			<font color="red">アンケート名は入力必須です</font>
+			<p>
+				<br> <font color="#808080">アンケートの補足説明</font>
+			</p>
+			<input type="email" class="form-control" maxlength="200" placeholder="テキスト">
+
+			<!-- チェックボタンの時 -->
+			<!-- divタグは囲み枠を表示 -->
+			<p>
+				<br> <font color="#808080">アンケート内容</font>
+			</p>
+
+			<div
+				style="display: inline-block; padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+				<font color="#808080">質問1&nbsp;&nbsp;</font> 
+				<input type="checkbox"><font color="red">回答必須</font> 
+				<input
+					type="text" style="font-size: 100%" class="form-control" size="130" maxlength="100" placeholder="質問内容">
+					<font color="red">質問内容は入力必須です</font>
+					 <input type="text" class="form-control"
+					style="font-size: 100%" placeholder="質問内容の補足説明"> <br>
+				
+				<font color="#808080">質問形式&nbsp;(項目を変更すると質問内容が消えます)</font> <br>
+				
+				<select name="select" id="select">
+					<option value="1">チェックボックス(複数選択可)</option>
+					<option value="2">ラジオボタン(1つのみ選択)</option>
+					<option value="3">自由記述</option>
+				</select><br> <br>
+				
+				<div class="row g-3">
+					<div class="col-auto">
+						<div class="form-check">
+							<input class="form-control" type="text" size="120" placeholder="質問項目">
+						</div>
+						<font color="red">質問項目は入力必須です</font>
+					</div>
+					<div class="col-auto">
+						<button class="btn btn-danger rounded-pill btn-sm"
+							type="button">－</button>
+					</div>
+				</div>
+				<div class="row g-3">
+					<div class="col-auto">
+						<div class="form-check">
+						 <input class="form-control" type="text" size="120" placeholder="質問項目">
+						</div>
+						<font color="red">質問項目は入力必須です</font>
+					</div>
+					<div class="col-auto">
+						<button class="btn btn-danger rounded-pill btn-sm"
+							type="button">－</button>
+					</div>
+				</div>
+				<div class="row g-3">
+					<div class="col-auto">
+						<div class="form-check">
+							 <input class="form-control" type="text" size="120" placeholder="質問項目">
+						</div>
+						<font color="red">質問項目は入力必須です</font>
+					</div>
+					<div class="col-auto">
+						<button class="btn btn-danger rounded-pill btn-sm"
+							type="button">－</button>
+					</div>
+				</div>
+				<div class="row g-3">
+					<div class="col-auto">
+						<div class="form-check">
+							 <input class="form-control" type="text" size="120" placeholder="質問項目">
+						</div>
+						<font color="red">質問項目は入力必須です</font>
+					</div>
+					<div class="col-auto">
+						<button class="btn btn-danger rounded-pill btn-sm"
+							type="button">－</button>
+					</div>
+				</div>
+				<br>
+				<button type="button">+&nbsp;選択肢の追加</button>
+
+				<br> <br>
+				<hr color="#C0C0C0">
+				<button class="btn btn-primary" type="button">質問の追加</button>
+				&nbsp;&emsp;
+				<button class="btn btn-outline-danger" type="button">質問の削除</button>
+				<br>
+			</div>
+			<br> <br>
+			<!-- ラジオボタンの時 -->
+			<!-- divタグは囲み枠を表示 -->
+			<div
+				style="display: inline-block; padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+				<font color="#808080">質問2&nbsp;&nbsp;</font>
+				 <input type="checkbox"><font color="red">回答必須</font> 
+				 <input type="text" style="font-size: 100%" class="form-control" size="130" placeholder="質問内容"> 
+					<input type="text" class="form-control"
+					style="font-size: 100%" placeholder="質問内容の補足説明"> <br>
+				<font color="#808080">質問形式&nbsp;(項目を変更すると質問内容が消えます)</font> <br>
+				
+				<select name="select" id="select">
+					<option value="1">チェックボックス(複数選択可)</option>
+					<option value="2">ラジオボタン(1つのみ選択)</option>
+					<option value="3">自由記述</option>
+				</select><br> <br>
+				
+				<div class="row g-3">
+					<div class="col-auto">
+						<div class="form-check">
+							 <input class="form-control" type="text" size="120" placeholder="質問項目">
+						</div>
+					</div>
+					<div class="col-auto">
+						<button class="btn btn-danger rounded-pill btn-sm"
+							type="button">－</button>
+					</div>
+				</div>
+				<div class="row g-3">
+					<div class="col-auto">
+						<div class="form-check">
+							 <input class="form-control" type="text" size="120" placeholder="質問項目">
+						</div>
+					</div>
+					<div class="col-auto">
+						<button class="btn btn-danger rounded-pill btn-sm"
+							type="button">－</button>
+					</div>
+				</div>
+				<div class="row g-3">
+					<div class="col-auto">
+						<div class="form-check">
+							 <input class="form-control" type="text" size="120" placeholder="質問項目">
+						</div>
+					</div>
+					<div class="col-auto">
+						<button class="btn btn-danger rounded-pill btn-sm"
+							type="button">－</button>
+					</div>
+				</div>
+				<div class="row g-3">
+					<div class="col-auto">
+						<div class="form-check">
+							 <input class="form-control" type="text" size="120" placeholder="質問項目">
+						</div>
+					</div>
+					<div class="col-auto">
+						<button class="btn btn-danger rounded-pill btn-sm"
+							type="button">－</button>
+					</div>
+				</div>
+				<br>
+				<button type="button">+&nbsp;選択肢の追加</button>
+
+				<br> <br>
+				<hr color="#C0C0C0">
+				<button class="btn btn-primary" type="button">質問の追加</button>
+				&nbsp;&emsp;
+				<button class="btn btn-outline-danger" type="button">質問の削除</button>
+				<br>
+			</div>
+
+			<br> <br>
+
+			<!-- 自由記述の時 -->
+			<!-- divタグは囲み枠を表示 -->
+			<div
+				style="display: inline-block; padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+				<font color="#808080">質問3&nbsp;&nbsp;</font> <input
+					type="checkbox"><font color="red">回答必須</font> <input
+					type="text" style="font-size: 100%" class="form-control" size="130"
+					placeholder="質問内容"> <input type="text" class="form-control"
+					style="font-size: 100%" placeholder="質問内容の補足説明"> <br>
+				<font color="#808080">質問形式&nbsp;(項目を変更すると質問内容が消えます)</font> <br>
+				<select name="select" id="select">
+					<option value="1">チェックボックス(複数選択可)</option>
+					<option value="2">ラジオボタン(1つのみ選択)</option>
+					<option value="3">自由記述</option>
+				</select><br> <br>
+				<br>
+				<hr color="#C0C0C0">
+				<button class="btn btn-primary" type="button">質問の追加</button>
+				&nbsp;&emsp;
+				<button class="btn btn-outline-danger" type="button">質問の削除</button>
+				<br>
+			</div>
+
+			<br> 
+			<div class="text-center">
+			<font color="red">回答必須は1つ以上必要です</font>
+			</div>
+			
+			<p class="text-center">
+				<input class="btn btn-outline-primary my-1 btn-lg" type="button"
+					 value="保存"> <input class="btn btn-outline-info ml-5 btn-lg"
+					type="button" value="一時保存">
+			</p>
+			
+			<form action="#" method="post">
+				<p class="text-center">
+					<input class="btn btn-outline-secondary mr-4" type="button"
+						value="戻る" id="button2">
+				</p>
+			</form>
+
+
+
+
+
+
+			<!-- Option 1: Bootstrap Bundle with Popper -->
+			<script
+				src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+				integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+				crossorigin="anonymous"></script>
+		</div>
+	</div>
+</body>
+</html>

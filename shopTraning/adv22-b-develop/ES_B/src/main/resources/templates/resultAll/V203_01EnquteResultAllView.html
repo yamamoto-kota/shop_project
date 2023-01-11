@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- アイコン追加 -->
+<link rel="icon" th:href="@{/image/favicon.ico}">
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/sample.css"
+	th:href="@{/css/sample.css}" />
+<title>アンケート集計結果</title>
+</head>
+
+<body>
+
+
+ 	<header th:include="~{header::header}"></header>
+
+
+	<div class="p-2 bd-highlight" id="right">
+		<br>
+		<h1>アンケート集計結果</h1>
+		<div class="container margin-left: 1500px">
+			<br>
+			<p>
+				<font color="#808080">アンケート名</font>
+			</p>
+			<p>
+				<b><font size="5" th:text="${ENQUETERESULTALLVM.enqueteVM.enquete.enqueteName}">2022年度定期検診・人間ドック受診前問診票</font></b>
+			</p>
+			<p>
+				<b><font size="3" th:text="${ENQUETERESULTALLVM.enqueteVM.enquete.enqueteSubtext}">※アンケート補足</font></b>
+			</p>
+			<hr color="#C0C0C0">
+			<br>
+
+			 <h2>回答者一覧</h2>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">ESQID</th>
+						<th scope="col">名前</th>
+						<th scope="col">事業部</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="respondent :${ENQUETERESULTALLVM.respondentList}">
+						<td th:text="${respondent.esqId}">lk0001</td>
+						<td th:text="${respondent.userName}">小川双葉</td>
+						<td th:text="${respondent.deptName}">経営企画室</td>
+					<!-- 	<td><input type="submit" th:action="@{/result}"th:value="${respondent.esqId}" name="esqId"
+							class="btn btn-outline-primary my-1" />詳細</td> -->
+
+							<td><form method="post" th:action="@{/result}"
+											style="display: inline">
+											<input type="hidden" th:value="${respondent.esqId}" name="esqId">
+											<button class="btn btn-outline-primary my-1" type="submit"
+												th:value="${ENQUETERESULTALLVM.enqueteVM.enquete.enqueteId}" name="enqueteId">詳細</button>
+										</form></td>
+					</tr>
+				</tbody>
+			</table>
+
+	  	<div class="shadow p-3 mb-5 bg-body rounded" >
+				<h2>CSVファイルダウンロード</h2>
+				<!-- <input type="submit" value="ダウンロード"
+					class="btn btn-outline-success my-1" />
+ -->
+				 	<form method="post" action="#" th:action="@{/resultAll/download}"
+											style="display: inline">
+											<button class="btn btn-outline-success my-1 statusCheck" type="submit"
+												th:value="${ENQUETERESULTALLVM.enqueteVM.enquete.enqueteId}" name="enqueteId">ダウンロード</button>
+										</form>
+			</div>
+			<br>
+			<p>
+					<br>
+			<font color="#808080">アンケート内容</font>
+			</p>
+
+	<div th:each="questionVM : ${ENQUETERESULTALLVM.enqueteVM.questionVMList}">
+
+				<font size="5">質問</font><b><font size="5" th:text="${questionVM.question.questionNumber}">　質問１</font></b>
+
+		<font size="4"><a th:text="${questionVM.question.questionText}">朝食を食べていますか？</a></font>
+				<p>
+		<font color="#808080"><a  th:text="${questionVM.question.questionSubtext}">questionSubtext</a></font>
+				</p>
+				<p>
+				<!-- 質問形式 -->
+							<a th:if="${questionVM.question.questionTypeId==1}">【単一選択】</a>
+							<a th:if="${questionVM.question.questionTypeId==2}">【複数選択】</a>
+							<a th:if="${questionVM.question.questionTypeId==3}">【自由記述】</a>
+						<!-- 必須入力 -->
+					<a th:if="${questionVM.question.requireFlag==1}">【必須入力】</a>
+							<br><br>
+				</p>
+				<p>
+				<div class="form-check">
+					<span th:each="c,cstat:${questionVM.choiceList}">
+							<a th:if="${questionVM.question.questionTypeId==1}"><input type="radio" name="whi" value="whi1" disabled="disabled"></a>
+							<a th:if="${questionVM.question.questionTypeId==2}"><input type="checkbox" name="rea" value="rea1" disabled="disabled"></a>
+							<a th:if="${questionVM.question.questionTypeId==3}"><textarea class="form-control" name="reason" cols="40" rows="8"></textarea></a>
+							<a th:text="${c.choiceText}">ほぼ毎日食べている</a>
+
+								<br>
+
+						</span>
+				</div>
+				<hr color="#C0C0C0">
+			<p>
+
+				</p>
+				</div>
+				<br>
+
+
+			<form action="#" method="post">
+				<p class="text-center">
+
+					<a th:href="@{/list}"><input class="btn btn-outline-secondary" type="button"name="" value="戻る"
+						id="button2"></a>
+				</p>
+			</form>
+		</div>
+	</div>
+
+		<script th:inline="javascript">
+    //「終了する」ボタンを押した際の処理
+    var btn = document.querySelectorAll('.statusCheck');
+    for (let i = 0; i < btn.length; i++) {
+        btn[i].addEventListener('click', function(e) {
+            const status =/*[[${ENQUETERESULTALLVM.enqueteVM.enquete.enqueteStateId}]]*/ a;
+            const enqId =/*[[${ENQUETERESULTALLVM.enqueteVM.enquete.enqueteId}]]*/ a;
+            const btnId = btn[i].value;
+            if(enqId != btnId){
+                window.alert('不正な操作が行われました。ページを再読み込みしてください。');
+                e.preventDefault();
+            }
+
+           if(status != 4){
+                window.alert('アンケート受付終了前はダウンロード出来ません。');
+                e.preventDefault();
+            }
+       })
+    }
+    </script>
+
+</body>
+</html>

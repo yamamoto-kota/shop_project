@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- アイコン追加 -->
+<link rel="icon" th:href="@{/image/favicon.ico}">
+<meta charset="UTF-8">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/sample.css"
+	th:href="@{/css/sample.css}" />
+<title>アンケート作成・編集画面</title>
+</head>
+<body>
+
+<!-- ヘッダーの追加 -->
+<header th:include="~{header::header}"></header>
+
+		<!-- ▽本体部分▽ -->
+	<div class="p-2 bd-highlight" id="right">
+		<br>
+
+		<div class="container margin-left: 1500px">
+		<h1>&nbsp;アンケート作成</h1>
+		<br>
+		<form th:object="${enqueteForm}" method="post" th:action="@{/edit/temporarySaving}">
+
+		<input type="hidden" th:field="*{enqueteId}" id="enqueteId">
+		<input type="hidden" th:field="*{createUserId}" id="createUserId">
+		<input type="hidden" th:field="*{version}" id="version">
+		<input type="hidden" th:questionCount="${enqueteForm.questionFormList.size()}" id="questionCount">
+
+
+		<!-- ▽アンケート対象の事業部選択▽ -->
+			<div class="form-check" style="display: inline-block; padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+			<p>
+			<b>アンケート対象事業部を選択してください</b>
+			</p>
+			<span th:each="e,stat:${ENQUETEEDITVM.deptList}">
+				<input type="checkbox" th:field="*{deptIds}" th:value="${e.deptId}" th:text="${e.deptName}"/>
+				<br>
+			</span>
+			</div>
+			<br><font color="red"><span th:if="${#fields.hasErrors('deptIds')}" th:errors="*{deptIds}" >ERROR!</span></font>
+			<br>
+		<!-- △アンケート対象の事業部選択△ -->
+
+		<!-- ▽アンケート名▽ -->
+		<br>
+		<p><font color="#808080">アンケート名 【必須】</font></p>
+		<div class="textBox">
+			<input type="text" class="form-control" th:field="*{enqueteName}" maxlength="100" placeholder="アンケート名">
+		</div>
+		<font color="red"><span th:if="${#fields.hasErrors('enqueteName')}" th:errors="*{enqueteName}" class="errorMessage">ERROR!</span></font>
+		<br>
+
+		<p>
+			<br> <font color="#808080">アンケートの補足説明</font>
+		</p>
+			<input type="text" class="form-control" maxlength="200" placeholder="アンケートの補足説明" th:field=*{enqueteSubtext}>
+			<font color="red"><span th:if="${#fields.hasErrors('enqueteSubtext')}" th:errors="*{enqueteSubtext}" class="errorMessage">ERROR!</span></font>
+		<!-- △アンケート名△ -->
+
+		<!-- ▽質問内容▽ -->
+		<p>
+			<br> <font color="#808080">アンケート内容</font>
+		</p>
+		<!-- ▽質問を繰り返し▽ -->
+		<th:block th:each="q,qstat:*{questionFormList}">
+
+		<div th:id="|questionGroup${qstat.index}|">
+		<div style="display: inline-block; padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+		<input type="hidden" th:field="*{questionFormList[__${qstat.index}__].questionNumber}" th:id="|questionNumber${qstat.index}|">
+
+		<font color="#808080">
+		<span th:text="|質問${qstat.index+1}|"  th:id="|questionNumberDisp${qstat.index}|"></span>
+		</font>
+		<!--  <font color="red">-->
+		<input type="checkbox" th:field="*{questionFormList[__${qstat.index}__].requireFlag}" th:value="1" th:text="回答必須" th:id="|requireFlag${qstat.index}|"/><br>
+		<!--</font>-->
+
+		<input type="text" style="font-size: 100%" class="form-control" size="130" maxlength="100" placeholder="質問内容"
+		 th:field="*{questionFormList[__${qstat.index}__].questionText}" th:id="|questionText${qstat.index}|">
+		<font color="red"><span th:if="${#fields.hasErrors('questionFormList[__${qstat.index}__].questionText')}" th:errors="*{questionFormList[__${qstat.index}__].questionText}" class="errorMessage">ERROR!</span></font>
+		<br>
+		<input type="text" class="form-control" style="font-size: 100%"  maxlength="200" placeholder="質問内容の補足説明"
+		 th:field="*{questionFormList[__${qstat.index}__].questionSubtext}" th:id="|questionSubtext${qstat.index}|">
+		  <font color="red"><span th:if="${#fields.hasErrors('questionFormList[__${qstat.index}__].questionSubtext')}" th:errors="*{questionFormList[__${qstat.index}__].questionSubtext}" class="errorMessage">ERROR!</span></font>
+		<br>
+
+		<!-- ▽質問形式▽ -->
+		<font color="#808080">質問形式&nbsp;(変更すると選択肢が消えます)</font><br>
+		<select th:field="*{questionFormList[__${qstat.index}__].questionTypeId}" onchange="changeQuestionType(this)" th:id="|changeQuestionTypePd${qstat.index}|" th:questionLoop="${qstat.index}">
+		<option th:each="t:${ENQUETEEDITVM.questionTypeList}" th:value="${t.questionTypeId}" th:text="${t.questionType}"></option>
+		</select><br>
+		<br>
+		<!-- △質問形式△ -->
+
+
+		<!-- ▽選択肢の内容▽ -->
+		<div th:id="|choiceArea${qstat.index}|">
+		<span th:if="*{questionFormList[__${qstat.index}__].questionTypeId!=3}">
+		<th:block th:each="c,cstat:*{questionFormList[__${qstat.index}__].choiceFormList}">
+		<!-- ▽選択肢のループ▽ -->
+		<div th:id="|choiceGroup${qstat.index}in${cstat.index}|">
+			<input type="hidden" th:field="*{questionFormList[__${qstat.index}__].choiceFormList[__${cstat.index}__].choiceNumber}" th:id="|choiceNumber${qstat.index}in${cstat.index}|"><!-- hiddenタグをgroupに入れ込んだ -->
+			<div class="form-check">
+			<div class="row g-3">
+			<div class="col-auto">
+			<input  class="form-control" type="text" maxlength="100" size="120" placeholder="選択肢"  th:field="*{questionFormList[__${qstat.index}__].choiceFormList[__${cstat.index}__].choiceText}" th:id="|choiceText${qstat.index}in${cstat.index}|">
+			<font color="red"><span th:if="${#fields.hasErrors('questionFormList[__${qstat.index}__].choiceFormList[__${cstat.index}__].choiceText')}" th:errors="*{questionFormList[__${qstat.index}__].choiceFormList[__${cstat.index}__].choiceText}" class="errorMessage">ERROR!</span></font>
+			</div>
+			<!-- エラーメッセージ -->
+
+				<!-- ▽削除ボタン▽ -->
+				<div class="col-auto">
+				<button class="btn btn-danger rounded-pill btn-sm"  type="button" onclick="removeChoice(this)" th:questionLoop="${qstat.index}" th:choiceLoop="${cstat.index}" th:id="|removeChoiceBtn${qstat.index}in${cstat.index}|">－</button>
+				</div>
+				</div>
+				<!-- △削除ボタン△ -->
+
+				</div>
+		</div>
+		<!-- △選択肢のループ△ -->
+	</th:block>
+	<span class="form-check">
+	<span th:id="|addedChoiceArea${qstat.index}|"></span>
+	</span>
+
+	<br>
+	<button type="button" value="+" onclick="addChoice(this)" th:questionLoop=${qstat.index} th:choiceCount=*{questionFormList[__${qstat.index}__].choiceFormList.size()} th:id="|addChoiceBtn${qstat.index}|">+&nbsp;選択肢の追加</button>
+
+
+	<br>
+	</span>
+	</div>
+
+	<input type="hidden" th:choiceCount="${enqueteForm.questionFormList[__${qstat.index}__].choiceFormList.size()}" th:id="|choiceCount${qstat.index}|"><!-- 追加した選択肢カウンター -->
+	<br>
+		<!-- △選択肢の内容△ -->
+		<hr color="#C0C0C0">
+
+		<!-- ▽ボタンを作成▽ -->
+		<button class="btn btn-primary" type="button" onclick="addQuestion(this)" th:id="|addQuestionBtn${qstat.index}|" th:questionLoop="${qstat.index}">質問の追加</button>
+		&nbsp;&emsp;
+	 <span th:id="|removeQuestionBtnArea${qstat.index}|">
+	<span th:if="*{questionFormList.size()} > 1">
+	<button class="btn btn-outline-danger" type="button" onclick="removeQuestion(this)"  th:id="|removeQuestionBtn${qstat.index}|" th:questionLoop="${qstat.index}">質問の削除</button>
+	</span>
+	 </span><br>
+		<!-- △ボタンを作成△ -->
+		</div>
+		<br>
+		<br>
+		</div>
+		<!-- △質問内容△ -->
+
+	<div th:id="|addedQuestionArea${qstat.index}|"></div>
+	</th:block>
+	<!-- △質問を繰り返し△ -->
+
+
+
+
+<!-- <input type="submit" th:formaction="@{/edit/temporarySaving}" name=temporary value="一時保存" /><br>
+<input type="submit" th:formaction="@{/edit/save}" name=save value="保存" /> -->
+
+<p class="text-center">
+		<input class="btn btn-outline-primary my-1 btn-lg" type="submit" th:formaction="@{/edit/save}" name=save value="保存" />
+		<input class="btn btn-outline-info ml-5 btn-lg" type="submit" th:formaction="@{/edit/temporarySaving}" name=temporary value="一時保存"/>
+</p>
+</form>
+<!-- △△本体部分△△ -->
+
+				<form th:action="@{/edit/back}" method="post">
+				<p class="text-center">
+				<input class="btn btn-outline-secondary mr-4" type="submit" value="戻る" id="button2">
+				</p>
+				</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script th:src="@{/js/edit.js}"></script>
+</div>
+</div>
+</body>
+</html>

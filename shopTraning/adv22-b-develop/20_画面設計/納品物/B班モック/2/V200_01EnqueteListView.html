@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../cssjsimg/sample.css"
+	th:href="@{/css/sample.css}" />
+<meta charset="UTF-8">
+<title>アンケート一覧</title>
+</head>
+<body>
+	<script type="text/javascript" src="../cssjsimg/header.js">
+		ヘッダーを表示
+	</script>
+	<!-- 下部 -->
+	<div class="p-2 bd-highlight">
+		<!-- 左右分割 -->
+		<div class="d-flex flex-row bd-highlight mb-3">
+			<div class="p-2 bd-highlight" id="left">
+				<!-- タブの内容を記述 -->
+
+				<table class="table table-hover">
+					<thead class="sidetab">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">回答者</th>
+						</tr>
+					</thead>
+					<tbody class="sidetab">
+						<tr>
+							<th scope="row">1</th>
+							<td><a href="#" onclick="showDisplay('noans')">未回答</a></td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td><a href="#" onclick="showDisplay('ans')">回答済み</a></td>
+						</tr>
+					</tbody>
+					<thead class="sidetab">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">管理者</th>
+						</tr>
+					</thead>
+					<tbody class="sidetab">
+						<tr>
+							<th scope="row">3</th>
+							<td colspan="2"><a href="#" onclick="showDisplay('control')">実施前</a></td>
+						</tr>
+						<tr>
+							<th scope="row">４</th>
+							<td colspan="2"><a href="#" onclick="showDisplay('state')">実施中</a></td>
+						</tr>
+						<tr>
+							<th scope="row">５</th>
+							<td colspan="2"><a href="#" onclick="showDisplay('result')">実施完了</a></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+			<!-- 本体部分 -->
+			<div class="p-2 bd-highlight" id="right">
+				<!-- 本体の内容を表示 -->
+				<h1>アンケート一覧</h1>
+				<br>
+				<div>
+					<span>アンケート名&emsp;</span> <span>アンケート状況&emsp;</span>
+				</div>
+
+				<div id="noans">
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<span>2022年度 定期検診・人間ドック 受診前問診票&emsp;</span>
+						<span>受付中&emsp;</span>
+						<span><a href=""><input type="button" value="回答する"
+								class="btn btn-outline-primary my-1"></a>&emsp;</span>
+					</div>
+				</div>
+
+
+				<div id="ans" style="display: none;">
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<span>情報セキュリティに関する緊急意識調査&emsp;</span>
+						<span>受付中&emsp;</span>
+						<span><a href="">
+						<input type="button" value="回答内容を見る" class="btn btn-outline-primary my-1"></a>&emsp;
+						</span>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<span>2022年度 裁量労働制に関する社内アンケート&emsp;</span>
+						<span>受付中&emsp;</span>
+						<span><a href=""><input type="button" value="回答内容を見る"
+								class="btn btn-outline-primary my-1"></a></span>&emsp;
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<span>2022年度 クラウドコンピューティングの利用に関するアンケート調査&emsp;</span>
+						<span>受付終了&emsp;</span>
+						<span><a href=""><input type="button" value="回答内容を見る"
+								class="btn btn-outline-primary my-1"></a></span>&emsp;
+					</div>
+				</div>
+
+				<div id="control" style="display: none;">
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<span>2022年度 定期検診・人間ドック 受診前問診票&emsp;</span>
+						<span>一時保存中&emsp;</span>
+						<span><a href=""><input type="button" value="管理"
+								class="btn btn-outline-info my-1"></a>&emsp;</span>
+								<span>
+								<a href="V201_01_01EnqueteEditView.html"><input type="button" value="編集"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+
+								<span><a href=""><input type="button" value="削除"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+								<span><a href=""><input type="button" value="実施する"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+					</div>
+
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<span>2022年度 オフショア開発&emsp;</span>
+						<span>実施前&emsp;</span>
+						<span><a href=""><input type="button" value="管理"
+								class="btn btn-outline-info my-1"></a>&emsp;</span> <span><a
+							href=""><input type="button" value="編集"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+								<span><a href=""><input type="button" value="削除"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+								<span><a href=""><input type="button" value="実施する"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<span>SNS利用動向に関する&emsp;</span>
+						<span>一時保存中&emsp;</span>
+						<span><a href=""><input type="button" value="管理"
+								class="btn btn-outline-info my-1"></a>&emsp;</span> <span><a
+							href=""><input type="button" value="編集"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+								<span><a href=""><input type="button" value="削除"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+								<span><a href=""><input type="button" value="実施する"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+					</div>
+				</div>
+
+				<div id="state" style="display: none;">
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<span>2022年度 定期検診・人間ドック 受診前問診票&emsp;</span>
+						<span>実施中&emsp;</span>
+						<span><a href=""><input type="button" value="管理"
+								class="btn btn-outline-info my-1"></a>&emsp;</span> <span><a
+							href=""><input type="button" value="回答状況"
+								class="btn btn-outline-primary my-1"></a>&emsp;</span>
+								<span><a href=""><input type="button" value="集計結果"
+								class="btn btn-outline-dark my-1"></a>&emsp;</span>
+								<span><a href=""><input type="button" value="終了する"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<span>SNS利用動向に関する&emsp;</span>
+						<span>実施中&emsp;</span>
+						<span><a href=""><input type="button" value="管理"
+								class="btn btn-outline-info my-1"></a>&emsp;</span> <span><a
+							href=""><input type="button" value="回答状況"
+								class="btn btn-outline-primary my-1"></a>&emsp;</span>
+								<span><a href=""><input type="button" value="集計結果"
+								class="btn btn-outline-dark my-1"></a>&emsp;</span>
+								<span><a href=""><input type="button" value="終了する"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<span>2022年度 定期検診・人間ドック 受診前問診票&emsp;</span>
+						<span>実施中&emsp;</span>
+						<span><a href=""><input type="button" value="管理"
+								class="btn btn-outline-info my-1"></a>&emsp;</span>
+								<span><a href=""><input type="button" value="回答状況"
+								class="btn btn-outline-primary my-1"></a>&emsp;</span>
+								<span><a href=""><input type="button" value="集計結果"
+								class="btn btn-outline-dark my-1"></a>&emsp;</span>
+								<span><a href=""><input type="button" value="終了する"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+					</div>
+				</div>
+
+				<div id="result" style="display: none;">
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<span>SNS利用動向に関する&emsp;</span>
+						<span>実施終了&emsp;</span>
+						<span><a href=""><input type="button" value="回答状況"
+								class="btn btn-outline-primary my-1"></a>&emsp;</span>
+						<span><a href=""><input type="button" value="集計結果"
+								class="btn btn-outline-dark my-1"></a>&emsp;</span>
+					</div>
+<!-- 					<div class="shadow p-3 mb-5 bg-body rounded"> -->
+<!-- 						<span>2022年度 定期検診・人間ドック 受診前問診票&emsp;</span> -->
+<!-- 						<span>実施終了&emsp;</span> -->
+<!-- 						<span><a href=""><input type="button" value="回答状況" -->
+<!-- 								class="btn btn-outline-primary my-1"></a>&emsp;</span> -->
+<!-- 						<span><a href=""><input type="button" value="集計結果" -->
+<!-- 								class="btn btn-outline-dark my-1"></a>&emsp;</span> -->
+<!-- 					</div> -->
+<!-- 					<div class="shadow p-3 mb-5 bg-body rounded"> -->
+<!-- 						<span>2022年度 定期検診・人間ドック 受診前問診票&emsp;</span> -->
+<!-- 						<span>実施終了&emsp;</span> -->
+<!-- 						<span><a href=""><input type="button" value="回答状況" -->
+<!-- 								class="btn btn-outline-primary my-1"></a>&emsp;</span> -->
+<!-- 						<span><a href=""><input type="button" value="集計結果" -->
+<!-- 								class="btn btn-outline-dark my-1"></a>&emsp;</span> -->
+<!-- 					</div> -->
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+	<script>
+		function showDisplay(select) {
+			nonDisplay();
+			display(select);
+			omit();
+			noAdd();
+		}
+
+		function display(select) {
+			//切り替える対象を取得
+
+			//切り替える対象の状態を取得
+			const div = document.getElementById(select);
+
+			//取得した情報からスタイルについての状態のみをstateに代入
+			state = div.style.display;
+			//デバッグ用にlogに出力
+			console.log(state);
+			//非表示中のときの処理
+			//スタイルを表示(inline)に切り替え
+			div.setAttribute("style", "display:inline");
+			//デバッグ用にinlineをlogに出力
+			console.log(select + ":inline");
+		}
+
+		function nonDisplay() {
+			const noans = document.querySelector('#noans');
+			//スタイルを非表示(none)に切り替え
+			noans.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("noans:none");
+
+			const ans = document.getElementById('ans');
+			//スタイルを非表示(none)に切り替え
+			ans.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("ans:none");
+
+			const control = document.getElementById('control');
+			//スタイルを非表示(none)に切り替え
+			control.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("control:none");
+
+			const state = document.getElementById('state');
+			//スタイルを非表示(none)に切り替え
+			state.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("state:none");
+
+			const result = document.getElementById('result');
+			//スタイルを非表示(none)に切り替え
+			result.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("result:none");
+		}
+
+		function omit() {
+			let target = document.querySelectorAll('#el');
+			let len = 40;
+			for ( let i in target) {
+				let str = target[i].textContent;
+
+				if (str.length > len) {
+					target[i].textContent = str.substring(0, len) + '…　';
+				}
+			}
+		}
+
+		function alert(){
+			alert('今日は' + '良い天気' + 'ですね');
+		}
+	</script>
+	<script type="text/javascript">
+		// タグ内にjavascriptコードを直接記述します。
+		omit();
+	</script>
+<!-- 	<script type="text/javascript">
+	//遷移時にアラート
+	var is_note_msg=false;
+	var message = "aaaa";
+	window.onbeforeunload = function(event){
+		if(is_note_msg){
+			event = event || window.event;
+			event.returnValue = message + '実行しますか？';
+			}
+		}
+	</script> -->
+
+</body>
+</html>

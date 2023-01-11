@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/sample.css"
+	th:href="@{/css/sample.css}" />
+<title>V205_01EnqueteAnswerView</title>
+</head>
+
+<body>
+	<script type="text/javascript" src="../static/js/header.js">
+		ヘッダーを表示
+	</script>
+	<!-- 本体部分 -->
+	<div class="p-2 bd-highlight" id="right">
+		<br>
+		<h1>&nbsp;管理者設定</h1>
+		<div class="container margin-left: 1500px">
+			<br>
+			<p>
+				<font color="#808080">アンケート名</font>
+			</p>
+			<p>
+				<b><font size="5">2022年度定期検診・人間ドック受診前問診票</font></b>
+			</p>
+			<hr color="#C0C0C0">
+			<!-- <p>
+				<font color="#808080">アンケート状態</font>
+			</p>
+			<div>
+				<div align="center">
+				<b>未実施 : </b><input type="submit" formaction="/add"
+					value="アンケートを開始する" class="btn btn-outline-primary my-1" />
+			</div>
+			<hr color="#C0C0C0"> -->
+			<br>
+			<p>
+				<font color="#808080">アンケート管理者</font>
+			</p>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">EQID</th>
+						<th scope="col">名前</th>
+						<th scope="col">部署</th>
+						<th scope="col">削除ボタン</th>
+					</tr>
+				</thead>
+				<tr bgcolor="#F2F2F2">
+					<td>lk1111</td>
+					<td>IS太郎</td>
+					<td>経営企画本部</td>
+					<td>
+						<!-- <input type="submit" formaction="/add" value="削除" class="btn btn-outline-secondary rounded-pill btn-sm"/> -->
+					</td>
+				</tr>
+				<tr>
+					<td>lk2222</td>
+					<td>ID太郎</td>
+					<td>管理本部</td>
+					<td><input type="submit" formaction="/add" value="削除"
+						class="btn  btn-outline-danger rounded-pill btn-sm" /></td>
+				</tr>
+				</tbody>
+			</table>
+			<br>
+
+			<hr color="#C0C0C0">
+			<p>
+				<font color="#808080">追加の場合</font>
+			</p>
+
+			氏名を入力してください<br>
+			<nav class="navbar navbar-light bg-light">
+				<form class="form-inline">
+					<input class="form-control mr-sm-2" type="search"
+						placeholder="Search" aria-label="Search">
+					<button class="btn btn-outline-primary my-1" type="submit">Search</button>
+				</form>
+			</nav>
+			<br>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>EQID</th>
+						<th>名前</th>
+						<th>部署</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>lk1111</td>
+						<td>IS次郎</td>
+						<td>営業部</td>
+						<td><input type="submit" formaction="/add" value="追加"
+							class="btn btn-primary rounded-pill btn-sm" /></td>
+					</tr>
+					<tr>
+						<td>lk2222</td>
+						<td>ID次郎</td>
+						<td>人事部</td>
+						<td><input type="submit" formaction="/add" value="追加"
+							class="btn btn-primary rounded-pill btn-sm" /></td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+			<hr color="#C0C0C0">
+			<form action="#" method="post">
+				<p class="text-center">
+					<input class="btn btn-outline-secondary" type="button" value="戻る"
+						id="button2">
+				</p>
+			</form>
+		</div>
+	</div>
+
+</body>

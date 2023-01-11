@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <property name="APP_LOG_FILE" value="C:/log/app.log"/>
+    <property name="DB_LOG_FILE" value="c:/log/db.log"/>
+    <property name="OUTPUT_LOG_PATTERN" value="[%d] [%p] [%c] [%t] - %m%n"/>
+    <!-- タイムスタンプ, ログレベル, ログカテゴリ, スレッド名 -->
+
+    <appender name="APP_FILE" class="ch.qos.logback.core.FileAppender">
+        <encoder>
+            <pattern>${OUTPUT_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${APP_LOG_FILE}</file>
+    </appender>
+
+    <appender name="DB_FILE" class="ch.qos.logback.core.FileAppender">
+        <encoder>
+            <pattern>${OUTPUT_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${DB_LOG_FILE}</file>
+    </appender>
+
+    <logger name="jp.co.isid.advtraining.log.AppLogger" level="INFO">
+       <appender-ref ref="APP_FILE"/>
+    </logger>
+    <logger name="jp.co.isid.advtraining.log.DbLogger" level="INFO">
+       <appender-ref ref="DB_FILE"/>
+    </logger>
+</configuration>

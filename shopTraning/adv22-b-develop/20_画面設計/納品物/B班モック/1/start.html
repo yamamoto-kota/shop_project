@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<title>ログイン</title>
+</head>
+<body class="text-center">
+
+	<h1 class="h3 mt-2 mb-3 font-weight-normal">ログイン</h1>
+	<br>
+	<font color="red"><p>エラーメッセージ(IDまたは、パスワードがまちがっています)</p></font>
+	<br>
+	<form class="w-25 mx-auto">
+		<label for="username" class="sr-only"></label>
+		<input class="form-control" id="username" type="text" maxlength="6" name="username" placeholder="ESQ ID"/>
+		<br>
+		<label for="password" class="sr-only"></label>
+		<input class="form-control"id="password" type="password" name="password" placeholder="パスワード" />
+		<br>
+		<!--画面遷移のためaタグ使用 -->
+		<a href="V200_01EnqueteListView.html"><input class="btn btn-outline-primary my-1" type="button" value="ログイン"/></a>
+
+	</form>
+</body>
+</html>

@@ -1,0 +1,154 @@
+/* 背景色 */
+#red {
+	/* 画面固定 */
+	/*position: fixed;*/
+	top: 0px;
+	/*絶対配置による親要素からの切り離し対策
+	横幅を100％で固定*/
+	width: 100vw;
+	background-color: #82B1FF;
+	text-align: center;
+}
+
+/* header */
+/*画面幅調整*/
+#all {
+	height: 150px;
+	width: 100vw;
+}
+
+#up {
+	/* 画面サイズの20%に指定 */
+	height: 70vw;
+	background-color: #81D4FA;
+	vertical-align: middle;
+}
+
+#down {
+	/* 画面サイズの80%に指定 */
+	height: 30vw;
+}
+
+#width {
+	text-align: center;
+	width: 100vw;
+}
+
+/* sidetab */
+/*画面幅調整*/
+#left {
+	/* 画面サイズの20%に指定 */
+	width: 20vw;
+	background-color: #81D4FA;
+}
+
+#right {
+	/* 画面サイズの80%に指定 */
+	width: 80vw;
+}
+
+/* a:hover {
+	background: #13c3ac;
+} */
+
+.textBox {
+	width: 103%;
+	height: 40px;
+	display: inline-flex;
+}
+
+.textBox .text {
+	width: calc(100% - 2vw);
+	outline: none;
+	border-style: solid;
+	border-width: 0px 0px 2px 0px;
+	font-size: 30px;
+	-webkit-transition: border-color 0.45s linear;
+	transition: border-color 0.45s linear;
+}
+
+.textBox>input.text:focus {
+	border-color: #99CCFF;
+}
+
+div.enqueteList{
+	display: inline-block;
+	_display: inline;
+	width: 400px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+div.enqueteState{
+	display: inline-block;
+	_display: inline;
+	overflow: hidden;
+	width: 150px;
+}
+
+div.enqueteId{
+	display: inline-block;
+	_display: inline;
+	overflow: hidden;
+	width: 150px;
+}
+
+div.enqueteButton{
+	display: inline-block;
+	_display: inline;
+}
+
+div.enquete{
+	overflow-y: scroll;
+	height: 500px;
+}
+
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+
+.btn-outline {
+    background: white; /*ボタンの背景色*/
+    border-color: #EF940B;
+    color: #EF940B; /*ボタンのテキストの色*/
+}
+
+
+.btn-outline:focus,
+.btn-outline.disabled:focus, .btn-outline[disabled]:focus, fieldset[disabled] .btn-outline:focus,
+.btn-outline.disabled.focus, .btn-outline[disabled].focus, fieldset[disabled] .btn-outline.focus {
+    background: white; /*ボタンの上にポインタを持ってきたり、クリックしたりした時の背景色*/
+    border-color: #EF940B;
+    color: #EF940B; /*ボタンの上にポインタを持ってきたり、クリックしたりした時のテキストの色*/
+    box-shadow: 0 0 0 0.25rem rgba(239, 148, 11, 0.5);
+}
+
+.btn-outline:active:focus,.btn-outline:active.focus,
+.btn-outline.active:focus,.btn-outline.active.focus{
+	background: #EF940B; /*ボタンの上にポインタを持ってきたり、クリックしたりした時の背景色*/
+    border-color: #EF940B;
+    color: white; /*ボタンの上にポインタを持ってきたり、クリックしたりした時のテキストの色*/
+}
+
+.btn-outline:hover{
+    background: #EF940B; /*ボタンの上にポインタを持ってきたり、クリックしたりした時の背景色*/
+    border-color: #EF940B;
+    color: white; /*ボタンの上にポインタを持ってきたり、クリックしたりした時のテキストの色*/
+}
+
+
+/* tabele hover時の背景色の変更 */
+/* .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #1e90ff;
+  }
+ */

@@ -1,0 +1,26 @@
+フォルダー パスの一覧
+
+【ES_B】画面モック
+│
+│
+├─フォルダーパス.txt
+│  
+├─static
+│  ├─css
+│  │      sample.css
+│  │      
+│  └─js
+│          header.js
+│          
+└─templates
+        V101_01LoginView.html
+        V200_01EnqueteListView.html
+        V201_01EnqueteEditView.html
+        V202_01EnqueteAnswerView.html
+        V202_02EnquteAnswerConfirmView.html
+        V203_01EnquteResultAllView.html
+        V204_01EnqueteAnswerStatusView.html
+        V204_02EnquteResultView.html
+        V205_01EnquteAdminEditView.html
+        V900ErrorView.html
+        

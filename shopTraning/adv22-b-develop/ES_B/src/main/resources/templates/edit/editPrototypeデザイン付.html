@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/sample.css"
+	th:href="@{/css/sample.css}" />
+<title>アンケート作成</title>
+</head>
+
+<body>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script th:src="@{/js/edit.js}"></script>
+
+	<!-- 本体部分 -->
+	<div class="p-2 bd-highlight" id="right">
+		<br>
+
+		<h1>&nbsp;アンケート作成</h1>
+		<div class="container margin-left: 1500px">
+
+
+			<form th:object="${enqueteForm}" method="post">
+
+				<input type="hidden" th:field="*{enqueteId}" id="enqueteId">
+				<input type="hidden" th:field="*{createUserId}" id="createUserId">
+				<input type="hidden" th:field="*{version}" id="version"> <input
+					type="hidden"
+					th:questionCount="${enqueteForm.questionFormList.size()}"
+					id="questionCount">
+
+
+
+				<!-- アンケート対象の事業部選択 -->
+				<br>
+				<div class="form-check"
+					style="display: inline-block; padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+					<p>
+						<b>アンケート対象事業部を選択してください</b>
+					</p>
+					<span th:each="e,stat:${ENQUETEEDITVM.deptList}"> <input
+						type="checkbox" th:field="*{deptIds}" th:value="${e.deptId}"
+						th:text="${e.deptName}" /> <!-- 4の場合は改行 --> <br>
+					</span>
+				</div>
+				<br>
+				<font color="red">事業は必須選択です</font>
+
+
+
+
+				<p>
+					<br> <font color="#808080">アンケート名 【必須】</font>
+				</p>
+				<div class="textBox">
+					<input type="text" class="form-control" th:field="*{enqueteName}" maxlength="100" placeholder="アンケート名">
+				</div>
+				<font color="red">アンケート名は入力必須です</font>
+				<p>
+					<br> <font color="#808080">アンケートの補足説明</font>
+				</p>
+				<input type="text" class="form-control" maxlength="200" placeholder="アンケートの補足説明" th:field=*{enqueteSubtext}>
+
+			<!-- チェックボタンの時 -->
+			<!-- divタグは囲み枠を表示 -->
+			<p>
+				<br> <font color="#808080">アンケート内容</font>
+			</p>
+
+
+
+
+			<div th:each="q,qstat:*{questionFormList}">
+			<div style="display: inline-block; padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+
+					<!--  <input type="hidden" th:field="*{questionFormList[__${qstat.index}__].questionId}" th:id="|questionId${qstat.index}|"> 新規にしろ変更にしろ自身のIDは自動裁判の為必要なし -->
+					<!--  <input type="hidden" th:field="*{questionFormList[__${qstat.index}__].enqueteId}" th:id="|enqueteId${qstat.index}|"> 情報かぶってるから保持しない。アンケIDは上の階層から持ってくるようにサービスを書く-->
+					<input type="hidden"
+						th:field="*{questionFormList[__${qstat.index}__].questionNumber}"
+						th:id="|questionNumber${qstat.index}|">
+
+
+					<font color="#808080">質問1&nbsp;&nbsp;</font>
+					<!-- th:field="*{questionFormList[__${qstat.index}__].questionNumber}" ただの表示であるtextだとfieldの意味を持たないっぽい -->
+
+					<input type="checkbox"
+						th:field="*{questionFormList[__${qstat.index}__].requireFlag}"
+						th:value="1" th:id="|requireFlag${qstat.index}|" />
+					<font color="red">回答必須</font> <br>
+
+
+				<input type="text" style="font-size: 100%" class="form-control" size="130" maxlength="100" placeholder="質問内容"
+				th:field="*{questionFormList[__${qstat.index}__].questionText}" th:id="|questionText${qstat.index}|">
+				<font color="red">質問内容は入力必須です</font>
+				<input type="text" class="form-control" style="font-size: 100%" placeholder="質問内容の補足説明"
+				 th:field="*{questionFormList[__${qstat.index}__].questionSubtext}" th:id="|questionSubtext${qstat.index}|">
+
+
+
+
+
+					<br>
+					<font color="#808080">質問形式&nbsp;(項目を変更すると質問内容が消えます)</font><br>
+					<select th:field="*{questionFormList[__${qstat.index}__].questionTypeId}"
+						onclick="changeQuestionType(this)" th:id="|changeTypePd${qstat.index}|">
+						<option th:each="t:${ENQUETEEDITVM.questionTypeList}" th:value="${t.questionTypeId}" th:text="${t.questionType}"></option>
+					</select>
+					<br><br>
+					<p><font color="green">実装済み</font></p>
+
+
+<!-- 				<select name="select" id="select">
+					<option value="1">チェックボックス(複数選択可)</option>
+					<option value="2">ラジオボタン(1つのみ選択)</option>
+					<option value="3">自由記述</option>
+				</select><br><br> -->
+
+
+					<span th:if="*{questionFormList[__${qstat.index}__].questionTypeId!=3}">
+					<th:block th:each="c,cstat:*{questionFormList[__${qstat.index}__].choiceFormList}">
+
+							<div th:id="|choiceGroup${qstat.index}in${cstat.index}|">
+								<input type="hidden" th:field="*{questionFormList[__${qstat.index}__].choiceFormList[__${cstat.index}__].choiceNumber}" th:id="|choiceNumber${qstat.index}in${qstat.index}|">
+								<!-- hiddenタグをgroupに入れ込んだ -->
+
+								<div class="row g-3">
+								<div class="col-auto">
+								<div class="form-check">
+								<input class="form-control" type="text" size="120" placeholder="質問項目" th:field="*{questionFormList[__${qstat.index}__].choiceFormList[__${cstat.index}__].choiceText}" th:id="|choiceText${qstat.index}in${cstat.index}|">
+								</div>
+								<font color="red">質問項目は入力必須です</font>
+								</div>
+
+
+								<th:block th:if="${cstat.index}>1">
+								<div class="col-auto">
+								<button class="btn btn-danger rounded-pill btn-sm"  type="button" onclick="removeChoice(this)" th:questionLoop="${qstat.index}" th:choiceLoop="${cstat.index}" th:id="|removeChoiceBtn${qstat.index}in${cstat.index}|">－</button>
+								</div><br>
+								</th:block>
+							</div>
+
+
+							</div>
+						</th:block>
+
+						<div th:id="|addedChoiceArea${qstat.index}|"></div> <!-- ここに追加した選択肢フォームを表示(上に黄色波線が付いているが問題なく動いている) -->
+						<br>
+
+						<button type="button" value="+" onclick="addChoice(this)"
+						th:questionLoop=${qstat.index}
+						th:choiceCount=*{questionFormList[__${qstat.index}__].choiceFormList.size()}
+						th:id="|addChoiceBtn${qstat.index}|">+&nbsp;選択肢の追加</button>
+						<br> <br>
+					</span>
+
+				<hr color="#C0C0C0">
+				<input type="hidden" th:choiceCount="${enqueteForm.questionFormList[__${qstat.index}__].choiceFormList.size()}" th:id="|choiceCount${qstat.index}|">
+					<!-- 追加した選択肢カウンター -->
+				<button class="btn btn-primary" type="button" onclick="addQuestion(this)" th:id="|addQuestionBtn${qstat.index}|" th:questionLoop="${qstat.index}">質問の追加</button>
+				&nbsp;&emsp;
+				<button class="btn btn-outline-danger" type="button" onclick="removeQuestion()">質問削除</button>
+
+				<br>
+
+			</div>
+			<br><br>
+			</div>
+
+
+
+			<br>
+			<div class="text-center">
+				<font color="red">回答必須は1つ以上必要です</font>
+			</div>
+
+
+			<p class="text-center">
+				<input class="btn btn-outline-primary my-1 btn-lg" type="submit" th:formaction="@{/edit/save}" name=save value="保存" />
+				<input class="btn btn-outline-info ml-5 btn-lg" type="submit" th:formaction="@{/edit/temporarySaving}" name=temporary value="一時保存"/>
+
+				<!-- 後で削除 ここから-->
+				<br><input type="submit" th:formaction="@{/edit/submitTest}" name=transition value="フォームの確認後(submitTest)" />
+				<!-- ここまで -->
+			</p>
+
+
+
+			</form>
+
+			<form action="#" method="post">
+				<p class="text-center">
+					<input class="btn btn-outline-secondary mr-4" type="button"
+						value="戻る" id="button2">
+				</p>
+			</form>
+
+
+
+
+
+
+			<!-- Option 1: Bootstrap Bundle with Popper -->
+			<script
+				src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+				integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+				crossorigin="anonymous"></script>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+package jp.co.isid.advtraining.entity;
+
+import org.seasar.doma.Column;
+import org.seasar.doma.Entity;
+import org.seasar.doma.Id;
+import org.seasar.doma.Table;
+
+@Entity
+@Table(name = "answer_status")
+public class AnswerStatus {
+	  @Id
+	  @Column(name = "esq_id")
+	  String esqId;
+
+	  @Column(name = "user_name")
+	  String userName;
+
+	  @Column(name="dept_id")
+	  Integer deptId;
+
+	  @Column(name="dept_name")
+	  String deptName;
+
+	public String getEsqId() {
+		return esqId;
+	}
+
+	public void setEsqId(String esqId) {
+		this.esqId = esqId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public Integer getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(Integer deptId) {
+		this.deptId = deptId;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+
+}

@@ -1,0 +1,10 @@
+javaScript cssを適用するには、下記のコピーして適用するとできるようになります。
+
+
+<link rel="stylesheet" type="text/css" href="../cssjsimg/sample.css"
+	th:href="@{/css/sample.css}" />
+
+<script type="text/javascript" src="../cssjsimg/header.js">
+
+
+

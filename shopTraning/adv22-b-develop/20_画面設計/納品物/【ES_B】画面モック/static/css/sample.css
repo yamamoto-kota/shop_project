@@ -1,0 +1,106 @@
+/* 背景色 */
+#red {
+	/* 画面固定 */
+	/*position: fixed;*/
+	top: 0px;
+	/*絶対配置による親要素からの切り離し対策
+	横幅を100％で固定*/
+	width: 100vw;
+	background-color: #82B1FF;
+	text-align: center;
+}
+
+/* header */
+/*画面幅調整*/
+#all {
+	height: 150px;
+	width: 100vw;
+}
+
+#up {
+	/* 画面サイズの20%に指定 */
+	height: 70vw;
+	background-color: #81D4FA;
+	vertical-align: middle;
+}
+
+#down {
+	/* 画面サイズの80%に指定 */
+	height: 30vw;
+}
+
+#width {
+	text-align: center;
+	width: 100vw;
+}
+
+/* sidetab */
+/*画面幅調整*/
+#left {
+	/* 画面サイズの20%に指定 */
+	width: 20vw;
+	background-color: #81D4FA;
+}
+
+#right {
+	/* 画面サイズの80%に指定 */
+	width: 80vw;
+}
+
+/* a:hover {
+	background: #13c3ac;
+} */
+
+.textBox {
+	width: 103%;
+	height: 40px;
+	display: inline-flex;
+}
+
+.textBox .text {
+	width: calc(100% - 2vw);
+	outline: none;
+	border-style: solid;
+	border-width: 0px 0px 2px 0px;
+	font-size: 30px;
+	-webkit-transition: border-color 0.45s linear;
+	transition: border-color 0.45s linear;
+}
+
+.textBox>input.text:focus {
+	border-color: #99CCFF;
+}
+
+div.enqueteList{
+	display: inline-block;
+	_display: inline;
+	width: 400px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+div.enqueteState{
+	display: inline-block;
+	_display: inline;
+	overflow: hidden;
+	width: 150px;
+}
+
+div.enqueteId{
+	display: inline-block;
+	_display: inline;
+	overflow: hidden;
+	width: 150px;
+}
+
+div.enqueteButton{
+	display: inline-block;
+	_display: inline;
+}
+
+div.enquete{
+	overflow-y: scroll;
+	height: 500px;
+}

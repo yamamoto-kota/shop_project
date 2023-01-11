@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/sample.css"
+	th:href="@{/css/sample.css}" />
+<meta charset="UTF-8">
+<title>アンケート一覧</title>
+</head>
+<body>
+	<script type="text/javascript" src="V101_01HeaderView.js">
+		ヘッダーを表示
+	</script>
+	<!-- 下部 -->
+	<div class="p-2 bd-highlight">
+		<!-- 左右分割 -->
+		<div class="d-flex flex-row bd-highlight mb-3">
+			<div class="p-2 bd-highlight" id="left">
+				<!-- タブの内容を記述 -->
+
+				<table class="table table-hover">
+					<thead class="sidetab">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">回答者</th>
+						</tr>
+					</thead>
+					<tbody class="sidetab">
+						<tr>
+							<th scope="row">1</th>
+							<td><a href="#" onclick="showDisplay('noans')">未回答</a></td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td><a href="#" onclick="showDisplay('ans')">回答済み</a></td>
+						</tr>
+					</tbody>
+					<thead class="sidetab">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">管理者</th>
+						</tr>
+					</thead>
+					<tbody class="sidetab">
+						<tr>
+							<th scope="row">3</th>
+							<td colspan="2"><a href="#" onclick="showDisplay('control')">実施前</a></td>
+						</tr>
+						<tr>
+							<th scope="row">4</th>
+							<td colspan="2"><a href="#" onclick="showDisplay('state')">実施中</a></td>
+						</tr>
+						<tr>
+							<th scope="row">5</th>
+							<td colspan="2"><a href="#" onclick="showDisplay('result')">実施完了</a></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+			<!-- 本体部分 -->
+			<div class="p-2 bd-highlight" id="right">
+				<!-- 本体の内容を表示 -->
+				<h1>アンケート一覧</h1>
+				<p style="color:red;" align="center"><font size="5">エラーメッセージ</font></p>
+
+				<br>
+				<div>
+					<div class="enqueteId">&emsp;アンケートID&emsp;</div>
+					<div class="enqueteList" style="cursor: auto">&emsp;アンケート名&emsp;</div>
+					<div class="enqueteState">&emsp;アンケート状況&emsp;</div>
+				</div>
+
+				<!-- 未回答 -->
+				<div class="enquete" id="noans" >
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">1</div>
+						<div class="enqueteList">2022年度 定期検診・人間ドック 受診前問診票</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href=""><input type="button" value="回答する"
+								class="btn btn-outline-primary my-1"></a>&emsp;</div>
+					</div>
+
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">2</div>
+						<div class="enqueteList">2022年度 定期検診・人間ドック 受診前問診票 ISIDインターテクノロジー新入社員限定</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href=""><input type="button" value="回答する"
+								class="btn btn-outline-primary my-1"></a>&emsp;</div>
+					</div>
+
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">3</div>
+						<div class="enqueteList">2022年度 定期検診・人間ドック 受診前問診票 ISIDインターテクノロジー新入社員限定</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href=""><input type="button" value="回答する"
+								class="btn btn-outline-primary my-1"></a>&emsp;</div>
+					</div>
+
+
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">4</div>
+						<div class="enqueteList">情報セキュリティに関する緊急意識調査</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href="">
+						<input type="button" value="回答する" class="btn btn-outline-primary my-1"></a>&emsp;
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">4</div>
+						<div class="enqueteList">情報セキュリティに関する緊急意識調査</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href="">
+						<input type="button" value="回答する" class="btn btn-outline-primary my-1"></a>&emsp;
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">4</div>
+						<div class="enqueteList">情報セキュリティに関する緊急意識調査</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href="">
+						<input type="button" value="回答する" class="btn btn-outline-primary my-1"></a>&emsp;
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">4</div>
+						<div class="enqueteList">情報セキュリティに関する緊急意識調査</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href="">
+						<input type="button" value="回答する" class="btn btn-outline-primary my-1"></a>&emsp;
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">4</div>
+						<div class="enqueteList">情報セキュリティに関する緊急意識調査</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href="">
+						<input type="button" value="回答する" class="btn btn-outline-primary my-1"></a>&emsp;
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">4</div>
+						<div class="enqueteList">情報セキュリティに関する緊急意識調査</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href="">
+						<input type="button" value="回答する" class="btn btn-outline-primary my-1"></a>&emsp;
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">4</div>
+						<div class="enqueteList">情報セキュリティに関する緊急意識調査</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href="">
+						<input type="button" value="回答する" class="btn btn-outline-primary my-1"></a>&emsp;
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">4</div>
+						<div class="enqueteList">情報セキュリティに関する緊急意識調査</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href="">
+						<input type="button" value="回答する" class="btn btn-outline-primary my-1"></a>&emsp;
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">4</div>
+						<div class="enqueteList">情報セキュリティに関する緊急意識調査</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href="">
+						<input type="button" value="回答する" class="btn btn-outline-primary my-1"></a>&emsp;
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">4</div>
+						<div class="enqueteList">情報セキュリティに関する緊急意識調査</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href="">
+						<input type="button" value="回答する" class="btn btn-outline-primary my-1"></a>&emsp;
+						</div>
+					</div>
+
+
+				</div>
+
+
+				<!-- 回答済み -->
+				<div class="enquete" id="ans" style="display: none;">
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">4</div>
+						<div class="enqueteList">情報セキュリティに関する緊急意識調査</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href="">
+						<input type="button" value="回答内容を見る" class="btn btn-outline-primary my-1"></a>&emsp;
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">5</div>
+						<div class="enqueteList">2022年度 裁量労働制に関する社内アンケート</div>
+						<div class="enqueteState">受付中&emsp;</div>
+						<div class="enqueteButton"><a href=""><input type="button" value="回答内容を見る"
+								class="btn btn-outline-primary my-1"></a>&emsp;</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">6</div>
+						<div class="enqueteList">2022年度 クラウドコンピューティングの利用に関するアンケート調査</div>
+						<div class="enqueteState">受付終了&emsp;</div>
+						<div class="enqueteButton"><a href=""><input type="button" value="回答内容を見る"
+								class="btn btn-outline-primary my-1"></a>&emsp;</div>
+					</div>
+				</div>
+
+				<!-- 実施前 -->
+				<div class="enquete" id="control" style="display: none;">
+
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">1</div>
+						<div class="enqueteList">2022年度 定期検診・人間ドック 受診前問診票&emsp;</div>
+						<div class="enqueteState">一時保存中&emsp;</div>
+						<div class="enqueteButton">
+						<span><a href=""><input type="button" value="管理" class="btn btn-outline-info my-1"></a>
+						&emsp;</span>
+						<span>
+						<a href=""><input type="button" value="編集" class="btn btn-outline-success my-1"></a>
+						&emsp;</span>
+						<span><a href=""><input id="efface" type="button" value="削除" class="btn btn-outline-danger my-1"></a>
+						&emsp;</span>
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">7</div>
+						<div class="enqueteList">2022年度 オフショア開発</div>
+						<div class="enqueteState">実施前&emsp;</div>
+						<div class="enqueteButton">
+						<span><a href=""><input type="button" value="管理" class="btn btn-outline-info my-1"></a>
+						&emsp;</span>
+						<span>
+						<a href=""><input type="button" value="編集" class="btn btn-outline-success my-1"></a>
+						&emsp;</span>
+						<span><a href=""><input id="efface" type="button" value="削除" class="btn btn-outline-danger my-1"></a>
+						&emsp;</span>
+						<span><a href=""><input id="exe" type="button" value="実施する" class="btn btn-outline-success my-1"></a>
+						&emsp;</span>
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">8</div>
+						<div class="enqueteList">SNS利用動向に関する</div>
+						<div class="enqueteState">一時保存中&emsp;</div>
+						<div class="enqueteButton">
+						<span><a href=""><input type="button" value="管理" class="btn btn-outline-info my-1"></a>
+						&emsp;</span>
+						<span>
+						<a href=""><input type="button" value="編集" class="btn btn-outline-success my-1"></a>
+						&emsp;</span>
+						<span><a href=""><input id="efface" type="button" value="削除" class="btn btn-outline-danger my-1"></a>
+						&emsp;</span>
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">9</div>
+						<div class="enqueteList">2022年度 オフショア開発2</div>
+						<div class="enqueteState">実施前&emsp;</div>
+						<div class="enqueteButton">
+						<span><a href=""><input type="button" value="管理" class="btn btn-outline-info my-1"></a>
+						&emsp;</span>
+						<span>
+						<a href=""><input type="button" value="編集" class="btn btn-outline-success my-1"></a>
+						&emsp;</span>
+						<span><a href=""><input id="efface" type="button" value="削除" class="btn btn-outline-danger my-1"></a>
+						&emsp;</span>
+						<span><a href=""><input id="exe" type="button" value="実施する" class="btn btn-outline-success my-1"></a>
+						&emsp;</span>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- 実施中 -->
+				<div class="enquete" id="state" style="display: none;">
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">1</div>
+						<div class="enqueteList">2022年度 定期検診・人間ドック 受診前問診票</div>
+						<div class="enqueteState">実施中&emsp;</div>
+						<div class="enqueteButton">
+						<span><a href=""><input type="button" value="管理"
+								class="btn btn-outline-info my-1"></a>&emsp;</span>
+						<span><a href=""><input type="button" value="回答状況"
+								class="btn btn-outline-primary my-1"></a>&emsp;</span>
+						<span><a href=""><input type="button" value="集計結果"
+								class="btn btn-outline-dark my-1"></a>&emsp;</span>
+						<span><a href=""><input id="finish" type="button" value="終了する"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">8</div>
+						<div class="enqueteList">SNS利用動向に関する</div>
+						<div class="enqueteState">実施中&emsp;</div>
+						<div class="enqueteButton">
+						<span><a href=""><input type="button" value="管理"
+								class="btn btn-outline-info my-1"></a>&emsp;</span>
+						<span><a href=""><input type="button" value="回答状況"
+								class="btn btn-outline-primary my-1"></a>&emsp;</span>
+						<span><a href=""><input type="button" value="集計結果"
+								class="btn btn-outline-dark my-1"></a>&emsp;</span>
+						<span><a href=""><input id="finish" type="button" value="終了する"
+								class="btn btn-outline-success my-1"></a>&emsp;</span>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- 実施後 -->
+				<div class="enquete" id="result" style="display: none;">
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">12</div>
+						<div class="enqueteList">2022年度 SNS利用動向に関する</div>
+						<div class="enqueteState">実施終了&emsp;</div>
+						<div class="enqueteButton">
+						<span><a href=""><input type="button" value="管理"
+								class="btn btn-outline-info my-1"></a>&emsp;</span>
+						<span><a href=""><input type="button" value="回答状況"
+								class="btn btn-outline-primary my-1"></a>&emsp;</span>
+						<span><a href=""><input type="button" value="集計結果"
+								class="btn btn-outline-dark my-1"></a>&emsp;</span>
+						</div>
+					</div>
+					<div class="shadow p-3 mb-5 bg-body rounded">
+						<div class="enqueteId">13</div>
+						<div class="enqueteList">2022年度 SNS利用動向に関する2</div>
+						<div class="enqueteState">実施終了&emsp;</div>
+						<div class="enqueteButton">
+						<span><a href=""><input type="button" value="管理"
+								class="btn btn-outline-info my-1"></a>&emsp;</span>
+						<span><a href=""><input type="button" value="回答状況"
+								class="btn btn-outline-primary my-1"></a>&emsp;</span>
+						<span><a href=""><input type="button" value="集計結果"
+								class="btn btn-outline-dark my-1"></a>&emsp;</span>
+						</div>
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+	<script>
+		function showDisplay(select) {
+			nonDisplay();
+			display(select);
+			omit();
+			noAdd();
+		}
+
+		function display(select) {
+			//切り替える対象を取得
+
+			//切り替える対象の状態を取得
+			const div = document.getElementById(select);
+
+			//取得した情報からスタイルについての状態のみをstateに代入
+			var state = div.style.display;
+			//デバッグ用にlogに出力
+			console.log(state);
+			//非表示中のときの処理
+			//スタイルを表示(inline)に切り替え
+			div.setAttribute("style", "display:block");
+			//デバッグ用にinlineをlogに出力
+			console.log(select + ":block");
+		}
+
+		function nonDisplay() {
+			const noans = document.querySelector('#noans');
+			//スタイルを非表示(none)に切り替え
+			noans.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("noans:none");
+
+			const ans = document.getElementById('ans');
+			//スタイルを非表示(none)に切り替え
+			ans.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("ans:none");
+
+			const control = document.getElementById('control');
+			//スタイルを非表示(none)に切り替え
+			control.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("control:none");
+
+			const state = document.getElementById('state');
+			//スタイルを非表示(none)に切り替え
+			state.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("state:none");
+
+			const result = document.getElementById('result');
+			//スタイルを非表示(none)に切り替え
+			result.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("result:none");
+		}
+
+	</script>
+
+
+<script>
+//アンケート名を押した際の処理
+var btn = document.querySelectorAll('.enqueteList');
+for ( var i in btn) {
+	btn[i].addEventListener('click', function(e) {
+		 if(e.target.style.whiteSpace=="normal"){
+			// noneで非表示
+			e.target.style.whiteSpace ="nowrap";
+		}else{
+			e.target.style.whiteSpace ="normal"
+		}
+	})
+}
+</script>
+
+
+<script>
+//「削除」ボタンを押した際の処理
+var btn = document.querySelectorAll('#efface');
+for ( var i in btn) {
+	btn[i].addEventListener('click', function(e) {
+	    var result = window.confirm('このアンケートを削除しますか?');
+
+
+	    if( result ) {
+	        console.log('OKがクリックされました');
+	    }
+	    else {
+	        console.log('キャンセルがクリックされました');
+	        e.preventDefault();
+	    }
+	})
+}
+</script>
+
+<script>
+//「実施する」ボタンを押した際の処理
+var btn = document.querySelectorAll('#exe');
+for ( var i in btn) {
+	btn[i].addEventListener('click', function(e) {
+	    var result = window.confirm('このアンケートを実施しますか?');
+
+	    if( result ) {
+	        console.log('OKがクリックされました');
+	    }
+	    else {
+	        console.log('キャンセルがクリックされました');
+	        e.preventDefault();
+	    }
+	})
+}
+</script>
+
+<script>
+//「終了する」ボタンを押した際の処理
+var btn = document.querySelectorAll('#finish');
+for ( var i in btn) {
+	btn[i].addEventListener('click', function(e) {
+	    var result = window.confirm('このアンケートを終了しますか?');
+
+	    if( result ) {
+	        console.log('OKがクリックされました');
+	    }
+	    else {
+	        console.log('キャンセルがクリックされました');
+	        e.preventDefault();
+	    }
+	})
+}
+</script>
+
+</body>
+</html>

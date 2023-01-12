@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- アイコン追加 -->
+<link rel="icon" th:href="@{/image/favicon.ico}">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/sample.css"
+	th:href="@{/css/sample.css}" />
+<meta charset="UTF-8">
+<title>アンケート一覧</title>
+</head>
+<body>
+
+
+	<header th:include="~{header::header}"></header>
+
+	<!-- 下部 -->
+	<div class="p-2 bd-highlight">
+		<!-- 左右分割 -->
+		<div class="d-flex flex-row bd-highlight mb-3">
+			<div class="p-2 bd-highlight" id="left">
+				<!-- タブの内容を記述 -->
+
+				<table class="table table-hover">
+					<thead class="sidetab">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">回答者</th>
+						</tr>
+					</thead>
+					<tbody class="sidetab">
+						<tr>
+							<th scope="row">1</th>
+							<td><a href="#" onclick="showDisplay('noans')">未回答</a></td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td><a href="#" onclick="showDisplay('ans')">回答済み</a></td>
+						</tr>
+					</tbody>
+					<thead class="sidetab">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">管理者</th>
+						</tr>
+					</thead>
+					<tbody class="sidetab">
+						<tr>
+							<th scope="row">3</th>
+							<td colspan="2"><a href="#" onclick="showDisplay('control')">実施前</a></td>
+						</tr>
+						<tr>
+							<th scope="row">4</th>
+							<td colspan="2"><a href="#" onclick="showDisplay('state')">実施中</a></td>
+						</tr>
+						<tr>
+							<th scope="row">5</th>
+							<td colspan="2"><a href="#" onclick="showDisplay('result')">実施完了</a></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+			<!-- 本体部分 -->
+			<div class="p-2 bd-highlight" id="right">
+				<!-- 本体の内容を表示 未回答 -->
+				<div class="enquete" id="noans">
+
+					<h1>アンケート一覧 未回答</h1>
+					<p style="color: red;" align="center">
+						<font size="5" th:text="${ERRORMESSAGE}">エラーメッセージ</font>
+					</p>
+
+					<br>
+					<div>
+						<div class="enqueteId">&emsp;アンケートID&emsp;</div>
+						<div class="enqueteList" style="cursor: auto">&emsp;アンケート名&emsp;</div>
+						<div class="enqueteState">&emsp;アンケート状況&emsp;</div>
+					</div>
+
+					<div th:if="${NOANSWER.isEmpty()}">
+						<br> <br> <br> <br>
+						<p align="center">
+							<font size="5">未回答のアンケートは0件です </font>
+						</p>
+					</div>
+					<div th:each="enquete,status : ${NOANSWER}">
+						<div class="shadow p-3 mb-5 bg-body rounded">
+							<div class="enqueteId" th:text="${enquete.enqueteId}">1</div>
+							<div class="enqueteList" th:text="${enquete.enqueteName}">2022年度
+								定期検診・人間ドック 受診前問診票</div>
+							<div class="enqueteState" th:switch="${enquete.enqueteStateId}">
+								<div th:case=1 th:text="一時保存">受付中&emsp;</div>
+								<div th:case=2 th:text="作成完了">受付中&emsp;</div>
+								<div th:case=3 th:text="回答受付">受付中&emsp;</div>
+								<div th:case=4 th:text="受付終了">受付中&emsp;</div>
+							</div>
+							<div class="enqueteButton">
+								<span>
+									<form method="get" action="#" th:action="@{/answer/index}"
+										style="display: inline">
+										<input type="hidden" value=0 name="isAnswer">
+										<button class="btn btn-outline-primary my-1" type="submit"
+											th:value="${enquete.enqueteId}" name="enqueteId">回答する</button>
+									</form>
+								</span>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+
+				<!-- 回答済み -->
+				<div class="enquete" id="ans" style="display: none;">
+
+					<h1>アンケート一覧 回答済み</h1>
+					<p style="color: red;" align="center">
+						<font size="5" th:text="${ERRORMESSAGE}">エラーメッセージ</font>
+					</p>
+
+					<br>
+					<div>
+						<div class="enqueteId">&emsp;アンケートID&emsp;</div>
+						<div class="enqueteList" style="cursor: auto">&emsp;アンケート名&emsp;</div>
+						<div class="enqueteState">&emsp;アンケート状況&emsp;</div>
+					</div>
+
+					<div th:if="${COMPLETEANSWER.isEmpty()}">
+						<br> <br> <br> <br>
+						<p align="center">
+							<font size="5">回答済みのアンケートは0件です </font>
+						</p>
+					</div>
+					<div th:each="enquete,status : ${COMPLETEANSWER}">
+						<div class="shadow p-3 mb-5 bg-body rounded">
+							<div class="enqueteId" th:text="${enquete.enqueteId}">4</div>
+							<div class="enqueteList" th:text="${enquete.enqueteName}">情報セキュリティに関する緊急意識調査</div>
+							<div class="enqueteState" th:switch="${enquete.enqueteStateId}">
+								<div th:case=1 th:text="一時保存">受付終了&emsp;</div>
+								<div th:case=2 th:text="作成完了">受付終了&emsp;</div>
+								<div th:case=3 th:text="回答受付">受付終了&emsp;</div>
+								<div th:case=4 th:text="受付終了">受付終了&emsp;</div>
+							</div>
+							<div class="enqueteButton">
+								<span>
+									<form method="get" action="#" th:action="@{/answer/index}"
+										style="display: inline">
+										<input type="hidden" value=1 name="isAnswer">
+										<button class="btn btn-outline-primary my-1" type="submit"
+											th:value="${enquete.enqueteId}" name="enqueteId">回答内容を見る</button>
+									</form>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 実施前 -->
+				<div class="enquete" id="control" style="display: none;">
+
+					<h1>アンケート一覧 実施前</h1>
+					<p style="color: red;" align="center">
+						<font size="5" th:text="${ERRORMESSAGE}">エラーメッセージ</font>
+					</p>
+
+					<br>
+					<div>
+						<div class="enqueteId">&emsp;アンケートID&emsp;</div>
+						<div class="enqueteList" style="cursor: auto">&emsp;アンケート名&emsp;</div>
+						<div class="enqueteState">&emsp;アンケート状況&emsp;</div>
+					</div>
+
+					<div th:if="${BEFOREENQUETE.isEmpty()}">
+						<br> <br> <br> <br>
+						<p align="center">
+							<font size="5">実施前のアンケートは0件です </font>
+						</p>
+					</div>
+					<div th:each="enquete,status : ${BEFOREENQUETE}">
+						<div class="shadow p-3 mb-5 bg-body rounded">
+							<div class="enqueteId" th:text="${enquete.enqueteId}">1</div>
+							<div class="enqueteList" th:text="${enquete.enqueteName}">2022年度
+								定期検診・人間ドック 受診前問診票&emsp;</div>
+							<div class="enqueteState" th:switch="${enquete.enqueteStateId}">
+								<div th:case=1 th:text="一時保存">一時保存中&emsp;</div>
+								<div th:case=2 th:text="作成完了">一時保存中&emsp;</div>
+								<div th:case=3 th:text="回答受付">一時保存中&emsp;</div>
+								<div th:case=4 th:text="受付終了">一時保存中&emsp;</div>
+							</div>
+							<div class="enqueteButton">
+								<span>
+									<form method="get" action="#" th:action="@{/admin}"
+										style="display: inline">
+										<button class="btn btn-outline-info my-1" type="submit"
+											th:value="${enquete.enqueteId}" name="enqueteId">管理</button>
+									</form>
+								</span> <span>
+									<form method="get" action="#" th:action="@{/edit}"
+										style="display: inline">
+										<button class="btn btn-outline-success my-1" type="submit"
+											th:value="${enquete.enqueteId}" name="enqueteId">編集</button>
+									</form>
+								</span> <span>
+									<form method="get" action="#"
+										th:action="@{/list/deleteEnquete}" style="display: inline">
+										<button class="efface btn btn-outline-danger my-1"
+											type="submit" th:value="${enquete.enqueteId}"
+											name="enqueteId">削除</button>
+									</form>
+								</span> <span th:if="${enquete.enqueteStateId} == 2">
+									<form method="get" action="#" th:action="@{list/startEnquete}"
+										style="display: inline">
+										<button class="exe btn btn-outline my-1" type="submit"
+											th:value="${enquete.enqueteId}" name="enqueteId">実施する</button>
+									</form>
+								</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- 実施中 -->
+				<div class="enquete" id="state" style="display: none;">
+
+					<h1>アンケート一覧 実施中</h1>
+					<p style="color: red;" align="center">
+						<font size="5" th:text="${ERRORMESSAGE}">エラーメッセージ</font>
+					</p>
+
+					<br>
+					<div>
+						<div class="enqueteId">&emsp;アンケートID&emsp;</div>
+						<div class="enqueteList" style="cursor: auto">&emsp;アンケート名&emsp;</div>
+						<div class="enqueteState">&emsp;アンケート状況&emsp;</div>
+					</div>
+
+					<div th:if="${STARTENQUETE.isEmpty()}">
+						<br> <br> <br> <br>
+						<p align="center">
+							<font size="5">実施中のアンケートは0件です </font>
+						</p>
+					</div>
+					<div th:each="enquete,status : ${STARTENQUETE}">
+						<div class="shadow p-3 mb-5 bg-body rounded">
+							<div class="enqueteId" th:text="${enquete.enqueteId}">1</div>
+							<div class="enqueteList" th:text="${enquete.enqueteName}">2022年度
+								定期検診・人間ドック 受診前問診票</div>
+							<div class="enqueteState" th:switch="${enquete.enqueteStateId}">
+								<div th:case=1 th:text="一時保存">回答受付&emsp;</div>
+								<div th:case=2 th:text="作成完了">回答受付&emsp;</div>
+								<div th:case=3 th:text="回答受付">回答受付&emsp;</div>
+								<div th:case=4 th:text="受付終了">回答受付&emsp;</div>
+							</div>
+							<div class="enqueteButton">
+								<span>
+									<form method="get" action="#" th:action="@{/admin}"
+										style="display: inline">
+										<button class="btn btn-outline-info my-1" type="submit"
+											th:value="${enquete.enqueteId}" name="enqueteId">管理</button>
+									</form>
+								</span> <span>
+									<form method="get" action="#" th:action="@{/status}"
+										style="display: inline">
+										<button class="btn btn-outline-primary my-1" type="submit"
+											th:value="${enquete.enqueteId}" name="enqueteId">回答状況</button>
+									</form>
+								</span> <span>
+									<form method="get" action="#" th:action="@{/resultAll}"
+										style="display: inline">
+										<button class="btn btn-outline-dark my-1" type="submit"
+											th:value="${enquete.enqueteId}" name="enqueteId">集計結果</button>
+									</form>
+								</span> <span>
+									<form method="get" action="#" th:action="@{list/finishEnquete}"
+										style="display: inline">
+										<button class="finish btn btn-outline-success my-1"
+											type="submit" th:value="${enquete.enqueteId}"
+											name="enqueteId">終了する</button>
+									</form>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 実施後 -->
+				<div class="enquete" id="result" style="display: none;">
+
+					<h1>アンケート一覧 実施完了</h1>
+					<p style="color: red;" align="center">
+						<font size="5" th:text="${ERRORMESSAGE}">エラーメッセージ</font>
+					</p>
+
+					<br>
+					<div>
+						<div class="enqueteId">&emsp;アンケートID&emsp;</div>
+						<div class="enqueteList" style="cursor: auto">&emsp;アンケート名&emsp;</div>
+						<div class="enqueteState">&emsp;アンケート状況&emsp;</div>
+					</div>
+
+					<div th:if="${FINISHENQUETE.isEmpty()}">
+						<br> <br> <br> <br>
+						<p align="center">
+							<font size="5">実施完了のアンケートは0件です </font>
+						</p>
+					</div>
+					<th:block th:if="${FINISHENQUETE}">
+						<div th:each="enquete,status : ${FINISHENQUETE}">
+							<div class="shadow p-3 mb-5 bg-body rounded">
+								<div class="enqueteId" th:text="${enquete.enqueteId}">12</div>
+								<div class="enqueteList" th:text="${enquete.enqueteName}">2022年度
+									SNS利用動向に関する</div>
+								<div class="enqueteState" th:switch="${enquete.enqueteStateId}">
+									<div th:case=1 th:text="一時保存">受付終了&emsp;</div>
+									<div th:case=2 th:text="作成完了">受付終了&emsp;</div>
+									<div th:case=3 th:text="回答受付">受付終了&emsp;</div>
+									<div th:case=4 th:text="受付終了">受付終了&emsp;</div>
+								</div>
+								<div class="enqueteButton">
+									<span>
+										<form method="get" action="#" th:action="@{/admin}"
+											style="display: inline">
+											<button class="btn btn-outline-info my-1" type="submit"
+												th:value="${enquete.enqueteId}" name="enqueteId">管理</button>
+										</form>
+									</span> <span>
+										<form method="get" action="#" th:action="@{/status}"
+											style="display: inline">
+											<button class="btn btn-outline-primary my-1" type="submit"
+												th:value="${enquete.enqueteId}" name="enqueteId">回答状況</button>
+										</form>
+									</span> <span>
+										<form method="get" action="#" th:action="@{/resultAll}"
+											style="display: inline">
+											<button class="btn btn-outline-dark my-1" type="submit"
+												th:value="${enquete.enqueteId}" name="enqueteId">集計結果</button>
+										</form>
+									</span>
+								</div>
+							</div>
+						</div>
+					</th:block>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script>
+		function showDisplay(select) {
+			nonDisplay();
+			display(select);
+		}
+
+		function display(select) {
+			//切り替える対象を取得
+
+			//切り替える対象の状態を取得
+			const div = document.getElementById(select);
+
+			//取得した情報からスタイルについての状態のみをstateに代入
+			var state = div.style.display;
+			//デバッグ用にlogに出力
+			console.log(state);
+			//非表示中のときの処理
+			//スタイルを表示(inline)に切り替え
+			div.setAttribute("style", "display:block");
+			//デバッグ用にinlineをlogに出力
+			console.log(select + ":block");
+		}
+
+		function nonDisplay() {
+			const noans = document.querySelector('#noans');
+			//スタイルを非表示(none)に切り替え
+			noans.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("noans:none");
+
+			const ans = document.getElementById('ans');
+			//スタイルを非表示(none)に切り替え
+			ans.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("ans:none");
+
+			const control = document.getElementById('control');
+			//スタイルを非表示(none)に切り替え
+			control.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("control:none");
+
+			const state = document.getElementById('state');
+			//スタイルを非表示(none)に切り替え
+			state.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("state:none");
+
+			const result = document.getElementById('result');
+			//スタイルを非表示(none)に切り替え
+			result.setAttribute("style", "display:none");
+			//デバッグ用にnoneをlogに出力
+			console.log("result:none");
+		}
+	</script>
+
+
+	<script>
+		//アンケート名を押した際の処理
+		var btn = document.querySelectorAll('.enqueteList');
+		for (let i = 0; i < btn.length; i++) {
+			btn[i].addEventListener('click', function(e) {
+				if (e.target.style.whiteSpace == "normal") {
+					// noneで非表示
+					e.target.style.whiteSpace = "nowrap";
+				} else {
+					e.target.style.whiteSpace = "normal"
+				}
+			})
+		}
+	</script>
+
+
+	<script>
+		//「削除」ボタンを押した際の処理
+		//.efface class=""
+		var btn = document.querySelectorAll('.efface');
+		for (let i = 0; i < btn.length; i++) {
+			btn[i].addEventListener('click', function(e) {
+				var result = window.confirm('このアンケートを削除しますか?');
+
+				if (result) {
+					console.log('OKがクリックされました');
+				} else {
+					console.log('キャンセルがクリックされました');
+					e.preventDefault();
+				}
+			})
+		}
+	</script>
+
+	<script>
+		//「実施する」ボタンを押した際の処理
+		var btn = document.querySelectorAll('.exe');
+		for (let i = 0; i < btn.length; i++) {
+			btn[i].addEventListener('click', function(e) {
+				var result = window.confirm('このアンケートを実施しますか?');
+
+				if (result) {
+					console.log('OKがクリックされました');
+				} else {
+					console.log('キャンセルがクリックされました');
+					e.preventDefault();
+				}
+			})
+		}
+	</script>
+
+	<script>
+		//「終了する」ボタンを押した際の処理
+		var btn = document.querySelectorAll('.finish');
+		for (let i = 0; i < btn.length; i++) {
+			btn[i].addEventListener('click', function(e) {
+				var result = window.confirm('このアンケートを終了しますか?');
+
+				if (result) {
+					console.log('OKがクリックされました');
+				} else {
+					console.log('キャンセルがクリックされました');
+					e.preventDefault();
+				}
+			})
+		}
+	</script>
+</body>
+</html>

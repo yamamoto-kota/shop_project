@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<title>ログイン</title>
+</head>
+<body class="text-center">
+
+	<h1 class="h3 mt-2 mb-3 font-weight-normal">ログイン</h1>
+	<br>
+	<p>エラーメッセージ(IDまたは、パスワードがまちがっています)</p>
+	<br>
+	<form class="w-25 mx-auto" action="0727V200_01.html" method="post">
+		<label for="username" class="sr-only"></label> <input
+			class="form-control" id="username" type="text" maxlength="6" name="username"
+			placeholder="ESQ ID" required autofocus /> <br> <label
+			for="password" class="sr-only"></label> <input class="form-control"
+			id="password" type="password" name="password" placeholder="パスワード"
+			required /> <br> <a href="0727V200_01.html"><input class="btn btn-outline-primary my-1"
+			type="button" value="ログイン" /></a>
+	</form>
+</body>
+</html>

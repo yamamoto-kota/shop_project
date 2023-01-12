@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- アイコン追加 -->
+<link rel="icon" th:href="@{/image/favicon.ico}">
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/sample.css"
+	th:href="@{/css/sample.css}" />
+<title>回答者状況</title>
+</head>
+
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-labels@1.1.0/src/chartjs-plugin-labels.min.js"></script>
+
+<!-- ヘッダーの追加 -->
+<header th:include="~{header::header}"></header>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js">円グラフの導入</script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-labels@1.1.0/src/chartjs-plugin-labels.min.js">割合を表示</script>
+
+	<!-- 本体部分 -->
+
+	<div class="p-2 bd-highlight" id="right">
+		<br>
+		<h1>&nbsp;回答者状況</h1>
+		<div class="container margin-left: 1500px">
+			<br>
+			<p>
+				<font color="#808080">アンケート名</font>
+			</p>
+			<p>
+				<b><font size="5" th:text="${ENQNAME}">2022年度定期検診・人間ドック受診前問診票</font></b>
+			</p>
+			<hr color="#C0C0C0">
+
+			<!-- プルダウン形式 メニューバー-->
+			<select  class="form-select" onchange="change();selectDept()"  id="deptId">
+			<!-- 'すべて' を表示-->
+			<option id="deptId" th:value="99">すべて</option>
+			<!-- '各事業部' を表示 -->
+			<option th:each="deptList : ${DEPTLIST}" th:value="${deptList.deptId}"
+			th:text="${deptList.deptName}"></option>
+			</select>
+
+<!-- 			<select class="form-select" name=""> -->
+<!-- 						<option value="すべて">すべて</option> -->
+<!-- 						<option value="監査室">監査室</option> -->
+<!-- 						<option value="経営企画本部">経営企画本部</option> -->
+<!-- 						<option value="コーポレート本部">コーポレート本部</option> -->
+<!-- 						<option value="Xイノベーション本部">Xイノベーション本部</option> -->
+<!-- 						<option value="事業推進室">事業推進室</option> -->
+<!-- 						<option value="金融ソリューション事業部">金融ソリューション事業部</option> -->
+<!-- 						<option value="グループ経営ソリューション">グループ経営ソリューション</option> -->
+<!-- 						<option value="HCM事業部">HCM事業部</option> -->
+<!-- 						<option value="製造ソリューション部">製造ソリューション部</option> -->
+<!-- 						<option value="コミュケーションIT事業部">コミュケーションIT事業部</option> -->
+<!-- 						<option value="エンタープライズIT事業部">エンタープライズIT事業部</option> -->
+<!-- 					</select> -->
+
+
+			<div class="d-flex flex-row bd-highlight mb-3">
+				<div class="p-2 bd-highlight" id="harf">
+					<p>事業部別未回答者</p>
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">ESQID</th>
+								<th scope="col">従業員名</th>
+								<th scope="col">事業部名</th>
+								<th scope="col"></th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr th:each="answerStatus:${UNANSWERD}" id="unsStatus" >
+								<td id="esqId"  th:text="${answerStatus.esqId}">li9010</td>
+								<td id="esqname" th:text="${answerStatus.userName}">須賀尚紀</td>
+								<td id="deptName" th:text="${answerStatus.deptName}">監査室</td>
+								<td id="deptID"><input type="hidden" th:value="${answerStatus.deptId}"></td>
+ 							</tr>
+
+<!-- 							<tr> -->
+<!-- 								<td>li9011</td> -->
+<!-- 								<td>ジョンスミス</td> -->
+<!-- 								<td>監査室</td> -->
+<!-- 							</tr> -->
+						</tbody>
+					</table>
+				</div>
+
+				<div class="p-2 bd-highlight">
+					<p>事業部別回答率</p>
+<!-- 					<canvas id="myChart">円グラフ描画</canvas> -->
+
+					<canvas id="allChart">円グラフ描画</canvas>
+
+<!-- 					<img src="事業部別グラフ.png" width="300" height="200"> -->
+				</div>
+
+			</div>
+			<br>
+			<form action="#" method="post">
+				<p class="text-center">
+
+					<a th:href="@{/list}"><input class="btn btn-outline-secondary" type="button"name="" value="戻る"
+						id="button2"></a>
+				</p>
+			</form>
+		</div>
+	</div>
+
+	<!-- 円グラフ処理工程 -->
+<script th:inline="javascript">
+
+//画面遷移で最初に呼び出し
+window.onload = function index() {
+	//初期呼び出し
+	totalCalc() //事業部全体の計算
+	pieDraw() //円グラフ描画
+};
+
+//メニューバー切り替え時に発動
+
+	function change(){
+	//メニューバー部署の変更
+	var menuDeptId=document.getElementById("#deptId"); //Id取得
+	var value =document.getElementById("deptId").value;
+
+// 	var value = menuDeptId.getAttribute('value');  //valueの値を取得
+
+		if(value==99){
+
+			//【アンケート全体】回答者未回答者の割合を表示計算
+			  if (myChart) {
+				myChart.destroy();
+				   }//円グラフの削除
+			  totalCalc() //全体割合の計算処理メソッドの呼び出し
+			  pieDraw() //円グラフの描画
+
+		}else{
+			var nElement = menuDept.indexOf(parseInt(value,10)); //何番目の要素かを取得
+			if (myChart) {
+				myChart.destroy();
+				   }//円グラフの削除
+			partCalc(nElement); //指定部署の割合計算
+			pieDraw() //円グラフの描画
+
+		}
+	}
+
+
+//使用する変数たち
+	let chartVal=[];//配列の初期化
+	var unanswerd=/*[[${UNANSWERD}]]*/"TERGETDEPARTMENT";  //アンケート対象部署に所属する未回答者をすべて
+	var menuDept=/*[[${TERGETDEPARTMENT}]]*/"TERGETDEPARTMENT"; //対象の部署Idの🐿
+
+	var deptList=/*[[${DEPTNOLIST}]]*/"DEPTNOLIST"; //指定部署の未回答者人数のリスト
+
+	//割合計算に必要
+	var uns=/*[[${DEPTNOLIST}]]*/"DEPTNOLIST"; //部署ごと未回答者
+	var allDeptUser=/*[[${USER}]]*/"USER";  //各部署に何人いるかリスト
+
+	var allUns=/*[[${ALLUNANS}]]*/"ALLUNANS";     //未回答者総数
+	var allUser=/*[[${ALLUSER}]]*/"ALLUSER";    //対象部署総人数
+
+	//計算結果格納
+	var ansPer=[]; //回答割合 (部署別)
+	var unsPer=[];  //未回答者割合 (部署別)
+
+	var allAnsPer; //回答者割合全体
+	var allUnsPer; //未回答割合全体
+
+
+//////////////////////メニューバーでいう「すべて」の処理///////////////////////////////////////////////
+//部署全体での回答者・未回答者の割合を計算
+function totalCalc(){
+
+		var kota=1; //回答者の割合
+		var kotaetenai=1; //未回答者の割合
+
+		kotaetenai=Math.round(allUns/allUser*100);   //未回答者＝未回答者総数÷対象部署総人数 (四捨五入))
+		console.log(kotaetenai);
+			kota=100-kotaetenai;  //100－未回答者
+
+			charVal=[kota,kotaetenai];  // 回答者と未回答者の割合を追加
+	}
+//アンケート全体の(未回答者・回答者)すべての円グラフを描画
+function pieDraw(){
+	console.log(charVal);
+	let context = document.querySelector("#allChart").getContext('2d')
+	window.myChart= new Chart(context, {
+		type: 'pie',
+		data: {
+			ender:'percentage',
+			labels: ["回答者", "未回答者"],
+			datasets: [{
+				backgroundColor: ["#6495ed", "#fa8072"],
+				data: charVal
+			}]
+	},
+	options: {
+		responsive: false,
+		}
+	});
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////各部署の回答者・未回答者の処理////////////////////////////
+
+//部署ごとでの回答者・未回答者の割合を計算
+function partCalc(nElement){
+	var kota=1; //回答者の割合
+	var kotaetenai=1; //未回答者の割合
+
+	console.log(nElement);
+
+	kotaetenai=Math.round(uns[nElement]/allDeptUser[nElement]*100);   //未回答者＝指定部署の未回答者÷指定部署の総人数 (四捨五入))
+
+	console.log( 'uns'+ uns[nElement]);
+	console.log( 'allDeptUser'+ allDeptUser[nElement]);
+
+		kota=100-kotaetenai;  //100－未回答者
+		charVal=[kota,kotaetenai];   // 回答者と未回答者の割合を追加
+ }
+
+ </script>
+
+<script th:inline="javascript">
+function selectDept() {
+    //ヘッダーに値を送り、ファンクションの呼び出し
+    //JavaScriptの送る値の設定
+       // JavaScriptの関数呼び出し
+        var dept = /*[[${UNANSWERD}]]*/"TERGETDEPARTMENT";
+       var menuDeptId=document.getElementById("#deptId"); //Id取得
+        var value =document.getElementById("deptId").value;
+       var tab = document.querySelectorAll('#unsStatus');
+        for (let index = 0; index < tab.length; index += 1) {
+            const element = tab[index];
+            //事業部名を取得
+             if(dept[index].deptId == value){
+                element.style.display ="table-row";
+            }else if(value==99){
+            	element.style.display ="table-row";
+            }else{
+                element.style.display ="none";
+            }
+       }
+}
+</script>
+
+
+</body>
+</html>

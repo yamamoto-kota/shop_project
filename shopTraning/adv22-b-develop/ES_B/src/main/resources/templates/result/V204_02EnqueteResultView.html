@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- アイコン追加 -->
+<link rel="icon" th:href="@{/image/favicon.ico}">
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/sample.css"
+	th:href="@{/css/sample.css}" />
+<title>アンケート結果</title>
+</head>
+
+<body>
+
+<header th:include="~{header::header}"></header>
+
+
+	<!-- 本体部分 -->
+	<div class="p-2 bd-highlight" id="right">
+		<br>
+
+		<h1>&nbsp;アンケート結果(<span th:text="${ENQUETEVM.userName}"></span>)</h1>
+		<div class="container margin-left: 1500px">
+			<br>
+			<p>
+
+				<!-- アンケート名 -->
+				<font color="#808080"></font>
+			</p>
+			<p>
+			<!--/* CSS修正予定 */-->
+
+			<!-- /*ENQUETEVM.この前にはgetが隠されとるenquete.enqueteName Entityの変数名とまったく同じ名前で持ってくる*/-->
+				<b><font size="5" th:text="${ENQUETEVM.enquete.enqueteName}">2022年度定期検診・人間ドック受診前問診票</font></b>
+			</p>
+			<p>
+				<b><font size="2"th:text="${ENQUETEVM.enquete.enqueteSubtext}">※質問補足</font></b>
+
+			</p>
+			<hr color="#C0C0C0">
+			<br>
+			<div th:each="q,qstat:${ENQUETEVM.resultQuestionVMList}">
+
+
+
+
+					<!-- /*質問番号*/-->
+					<b>質問  <a th:text="${q.question.questionNumber}"></a></b>
+
+
+					<!-- /*質問文*/-->
+					<b>&nbsp;<a th:text="${q.question.questionText}">・ 朝食を食べていますか？></a></b>
+
+
+
+				<p>
+					<!-- /*質問補足文*/-->
+					<font color="#C0C0C0" th:text="${q.question.questionSubtext}"> 朝食を摂らない方もご回答ください。</font>
+				</p>
+
+
+				<p>
+					<!-- 回答形式 -->
+					<a th:if="${q.question.questionTypeId==1}">【単一選択】</a>
+					<a th:if="${q.question.questionTypeId==2}">【複数選択】</a>
+					<a th:if="${q.question.questionTypeId==3}">【自由記述】</a>
+
+					<!-- 必須入力 -->
+					<a th:if="${q.question.requireFlag==1}">【必須入力】</a>
+							<br><br>
+				</p>
+
+				<p><!-- 回答表示1 -->
+					<th:block th:if="${q.question.questionTypeId==1}">
+						<th:block th:each="c,cstat:${q.choiceVMList}">
+							<th:block th:if ="${c.Answered}">
+							<input type="radio" disabled="disabled"  checked="checked">
+							<a th:text="${c.choice.choiceText}"></a><br>
+							</th:block>
+							<!-- 回答表示1(回答していない選択肢) -->
+							<th:block th:if ="${c.Answered==null}">
+							<input type="radio" disabled="disabled">
+  							<a th:text="${c.choice.choiceText}"></a><br>
+							</th:block>
+						</th:block>
+					</th:block>
+
+
+
+					<!-- 回答表示2 -->
+					<th:block th:if="${q.question.questionTypeId==2}">
+						<th:block th:each="c,cstat:${q.choiceVMList}">
+							 <th:block th:if ="${c.Answered}" >
+							 	<input type="checkbox" disabled="disabled" checked="checked">
+  								<a th:text="${c.choice.choiceText}"></a> <br>
+  							 </th:block>
+  							 <!-- 回答表示2(回答していない選択肢) -->
+  							 <th:block th:if ="${c.Answered==null}" >
+							 	<input type="checkbox" disabled="disabled" >
+  								<a th:text="${c.choice.choiceText}"></a> <br>
+  							 </th:block>
+  						</th:block>
+					</th:block>
+
+
+					<th:block th:if="${q.question.questionTypeId==3}">
+						<textarea disabled th:text="${q.questionAnswer.answerText}"
+								class="form-control"cols="40" rows="8"></textarea>
+					</th:block>
+				</p>
+			</div>
+
+									<div align="center" >
+									<form method="get" action="#" th:action="@{/resultAll}"
+										style="display: inline">
+										<button class="btn btn-outline-secondary" type="submit"
+											th:value="${ENQUETEVM.enquete.enqueteId}" name="enqueteId" >戻る</button>
+									</form>
+									</div>
+
+
+
+		</div>
+	</div>
+</body>

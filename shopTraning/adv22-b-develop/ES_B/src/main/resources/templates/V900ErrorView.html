@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- アイコン追加 -->
+<link rel="icon" th:href="@{/image/favicon.ico}">
+<meta charset="UTF-8">
+<title>システムエラー画面</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./css/sample.css" />
+</head>
+<body class="text-center">
+	<div style="text-align: center">
+		<img
+			src="https://www.shoshinsha-design.com/wp-content/uploads/2015/03/sozai_20150329_chuui.jpg"
+			width="150" height="120">
+	</div>
+	<h2 align="center">システムエラーが発生しました</h2>
+	<div class="errorMessage" style="text-align: center; color: red">
+		大変お手数ですが、システム管理者に連絡してください</div>
+	<br>
+	<form class="menu">
+		<p align="center">
+			<!-- <input type="button"
+				onclick="location.href='B_login.html'" value="ログイン画面へ戻る"> -->
+			<input type="button" class="btn btn-outline-primary"
+				onclick="location.href='V101_01LoginView.html'" value="ログイン画面へ戻る">
+		</p>
+	</form>
+</body>
+</html>

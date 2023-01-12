@@ -1,0 +1,8 @@
+diff a/.gitignore b/.gitignore	(rejected hunks)
+@@ -1 +1,6 @@
+ ES_B/src/main/java/jp/co/isid/advtraining/dao/EnqueteListDao.java
++ES_B/src/main/resources/META-INF/jp/co/isid/advtraining/dao/QuestionTypeDao/selectAll.sql
++ES_B/src/main/resources/META-INF/jp/co/isid/advtraining/dao/QuestionDao/selectByEnqueteId.sql
++ES_B/src/main/resources/META-INF/jp/co/isid/advtraining/dao/ChoiceDao/selectByQuestionId.sql
++ES_B/src/main/resources/META-INF/jp/co/isid/advtraining/dao/DeptDao/selectAll.sql
++ES_B/src/main/resources/META-INF/jp/co/isid/advtraining/dao/EnqueteAdminUserDao/getEnqueteAdminUser.sql

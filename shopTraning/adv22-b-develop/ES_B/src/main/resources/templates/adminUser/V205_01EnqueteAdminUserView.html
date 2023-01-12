@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- アイコン追加 -->
+<link rel="icon" th:href="@{/image/favicon.ico}">
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/sample.css"
+	th:href="@{/css/sample.css}" />
+<title>V205_01EnqueteAnswerView</title>
+</head>
+
+<body>
+	<header th:include="~{header::header}"></header>
+	<!-- 本体部分 -->
+	<div class="p-2 bd-highlight" id="right">
+		<br>
+		<h1>&nbsp;管理者設定</h1>
+		<div class="container margin-left: 1500px">
+			<br>
+			<p>
+				<font color="#808080">アンケート名</font>
+			</p>
+			<p>
+				<tr th:each="date : ${ADMINUSERVM.enquete}">
+				<b><font size="5"><td th:text="${date.enqueteName}"></td></font></b>
+				</tr>
+			</p>
+			<hr color="#C0C0C0">
+			<!-- <p>
+				<font color="#808080">アンケート状態</font>
+			</p>
+			<div>
+				<div align="center">
+				<b>未実施 : </b><input type="submit" formaction="admin/add"
+					value="アンケートを開始する" class="btn btn-outline-primary my-1" />
+			</div>
+			<hr color="#C0C0C0"> -->
+			<br>
+			<p>
+				<font color="#808080">アンケート管理者</font>
+			</p>
+			<font color="red"><span th:text="${ERRORMESSAGE2}"></span></font>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">ESQID</th>
+						<th scope="col">名前</th>
+						<th scope="col">部署</th>
+						<th scope="col">削除ボタン</th>
+					</tr>
+				</thead>
+
+				<tr th:each="date : ${ADMINUSERVM.adminEsqUserDeptList}"
+				th:bgcolor="${LOGINUSER.esqId == date.esqId  || date.esqId == ADMINUSERVM.enquete.createUserId} ? '#F2F2F2'">
+						<td th:text="${date.esqId}"></td>
+						<td th:text="${date.userName}"></td>
+						<td th:text="${date.deptName}"></td>
+					<td>
+					<form th:action="@{/admin/insertupdate}" method="POST">
+					<input type="hidden" th:value="${ADMINUSERVM.enquete.enqueteId}" name="enqueteId"/>
+					<input type="hidden" th:value="${date.esqId}" name="esqId"/>
+					<input th:if="${LOGINUSER.esqId != date.esqId  && date.esqId != ADMINUSERVM.enquete.createUserId}"
+					type="submit" value="削除" class="btn  btn-outline-danger rounded-pill btn-sm" />
+					</form>
+					</td>
+				</tr>
+
+				</tbody>
+			</table>
+			<br>
+
+			<hr color="#C0C0C0">
+			<p>
+				<font color="#808080">追加の場合</font>
+			</p>
+
+			<span>氏名を入力してください</span>
+			<br>
+			<font color="red"><span th:text="${ERRORMESSAGE1}"></span></font>
+				<form method="post" th:action="@{/admin/search}" class="form-inline">
+					<input type="search" maxlength="100" placeholder="searchWord" aria-label="searchWord" class="form-control mr-sm-2" name="searchWord">
+					<button class="btn btn-outline-primary my-1" type="submit" th:value="${ADMINUSERVM.enquete.enqueteId}" name="enqueteId">Search</button>
+				</form>
+			<br>
+			<font color="red"><span th:text="${ERRORMESSAGE3}"></span></font>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ESQID</th>
+						<th>名前</th>
+						<th>部署</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr th:each="date : ${ADMINUSERVM.esqUserDeptList}">
+						<td th:text="${date.esqId}"></td>
+						<td th:text="${date.userName}"></td>
+						<td th:text="${date.deptName}"></td>
+						<td>
+						<form th:action="@{/admin/add}" method="POST">
+						<input type="hidden" th:value="${ADMINUSERVM.enquete.enqueteId}" name="enqueteId"/>
+						<input type="hidden" th:value="${date.esqId}" name="esqId"/>
+						<input type="submit" value="追加" class="btn btn-primary rounded-pill btn-sm" />
+						</form>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+
+			<br>
+			<hr color="#C0C0C0">
+			<form th:action="@{/admin/back}" method="GET">
+				<p class="text-center">
+					<input class="btn btn-outline-secondary" type="submit" value="戻る"
+						id="button2">
+				</p>
+			</form>
+		</div>
+	</div>
+
+</body>

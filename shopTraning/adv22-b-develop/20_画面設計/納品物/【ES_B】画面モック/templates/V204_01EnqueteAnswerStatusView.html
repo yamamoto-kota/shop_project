@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../static/css/sample.css"
+	th:href="@{/css/sample.css}" />
+<title>回答者状況</title>
+</head>
+
+<body>
+	<script type="text/javascript" src="../static/js/header.js">
+		ヘッダーを表示
+	</script>
+
+	<!-- 本体部分 -->
+
+	<div class="p-2 bd-highlight" id="right">
+		<br>
+		<h1>&nbsp;回答者状況</h1>
+		<div class="container margin-left: 1500px">
+			<br>
+			<p>
+				<font color="#808080">アンケート名</font>
+			</p>
+			<p>
+				<b><font size="5">2022年度定期検診・人間ドック受診前問診票</font></b>
+			</p>
+			<hr color="#C0C0C0">
+			<br>
+
+			<div class="d-flex flex-row bd-highlight mb-3">
+				<div class="p-2 bd-highlight" id="harf">
+					<p>事業部別未回答者</p>
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">ESQID</th>
+								<th scope="col">従業員名</th>
+								<th scope="col">事業部名</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>li9010</td>
+								<td>須賀尚紀</td>
+								<td>監査室</td>
+							</tr>
+							<tr>
+								<td>li9011</td>
+								<td>ジョンスミス</td>
+								<td>監査室</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="p-2 bd-highlight">
+					<p>事業部別回答率</p>
+					<select class="form-select" name="example">
+						<option value="すべて">すべて</option>
+						<option value="監査室">監査室</option>
+						<option value="経営企画本部">経営企画本部</option>
+						<option value="コーポレート本部">コーポレート本部</option>
+						<option value="Xイノベーション本部">Xイノベーション本部</option>
+						<option value="事業推進室">事業推進室</option>
+						<option value="金融ソリューション事業部">金融ソリューション事業部</option>
+						<option value="グループ経営ソリューション">グループ経営ソリューション</option>
+						<option value="HCM事業部">HCM事業部</option>
+						<option value="製造ソリューション部">製造ソリューション部</option>
+						<option value="コミュケーションIT事業部">コミュケーションIT事業部</option>
+						<option value="エンタープライズIT事業部">エンタープライズIT事業部</option>
+
+
+					</select>
+					<br>
+					<img src="事業部別グラフ.png" width="300" height="200">
+
+
+				</div>
+
+			</div>
+			<br>
+			<form action="#" method="post">
+				<p class="text-center">
+					<input class="btn btn-outline-secondary" type="button" value="戻る"
+						id="button2">
+				</p>
+			</form>
+		</div>
+	</div>
+</body>

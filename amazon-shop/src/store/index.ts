@@ -1,5 +1,6 @@
+import { TimePicker } from "element-ui";
 import Vue from "vue";
-import Vuex from "vuex";
+import Vuex, { Store } from "vuex";
 
 Vue.use(Vuex);
 
@@ -35,140 +36,43 @@ export interface Slip {
   slipId: number;
   userId: string;
   allItemName: string;
-  totalPrice: number;
-  purchaseDate: Date;
+  purchasePrice: number;
+  purchaseDate: string;
 }
 
 export default new Vuex.Store({
   state: {
-    allItem: [
-      {
-        itemId: 1,
-        itemName: "bread",
-        genre: "food",
-        price: 100,
-        img: "パン",
-      },
-      {
-        itemId: 2,
-        itemName: "apple",
-        genre: "food",
-        price: 200,
-        img: "リンゴ",
-      },
-      {
-        itemId: 3,
-        itemName: "Logo",
-        genre: "food",
-        price: 300,
-        img: "logo",
-      },
-      {
-        itemId: 4,
-        itemName: "bread",
-        genre: "food",
-        price: 100,
-        img: "パン",
-      },
-      {
-        itemId: 5,
-        itemName: "apple",
-        genre: "food",
-        price: 200,
-        img: "リンゴ",
-      },
-      {
-        itemId: 6,
-        itemName: "Logo",
-        genre: "food",
-        price: 100,
-        img: "logo",
-      },
-      {
-        itemId: 7,
-        itemName: "はなちゃん",
-        genre: "amimal",
-        price: 5,
-        img: "hana",
-      },
-    ] as Item[],
-    searchItem: [
-      {
-        itemId: 1,
-        itemName: "bread",
-        genre: "food",
-        price: 100,
-        img: "パン",
-      },
-      {
-        itemId: 2,
-        itemName: "apple",
-        genre: "food",
-        price: 200,
-        img: "リンゴ",
-      },
-      {
-        itemId: 3,
-        itemName: "bread",
-        genre: "food",
-        price: 100,
-        img: "logo",
-      },
-    ] as Item[],
-    cartList: [
-      {
-        cartItemId: 1,
-        itemId: 1,
-        userId: "lk2889",
-        itemName: "bread",
-        genre: "food",
-        price: 100,
-        img: "パン",
-        quantity: 1,
-      },
-      {
-        cartItemId: 2,
-        itemId: 2,
-        userId: "lk2889",
-        itemName: "apple",
-        genre: "food",
-        price: 200,
-        img: "リンゴ",
-        quantity: 5,
-      },
-      {
-        cartItemId: 2,
-        itemId: 7,
-        userId: "lk2889",
-        itemName: "はなちゃん",
-        genre: "animal",
-        price: 5,
-        img: "hana",
-        quantity: 3,
-      },
-    ] as CartItem[],
-    userList: [
-      {
-        userId: "lk2889",
-        userName: "kota",
-        address: "fukushima",
-        mail: "aa@bb.co.jp",
-        money: 700,
-        password: "12345",
-      },
-    ] as User[],
-    slipList: [
-      {
-        slipId: 1,
-        userId: "lk2889",
-        allItemName: "bread,apple",
-        totalPrice: 300,
-        purchaseDate: new Date(),
-      },
-    ],
+    serverTest: "",
+    allItem: [] as Item[],
+    searchItem: [] as Item[],
+    cartList: [] as CartItem[],
+    loginUser: {
+      userId: "",
+      userName: "",
+      address: "",
+      mail: "",
+      money: 0,
+      password: "",
+    } as User,
+    slipList: [] as Slip[],
   },
   getters: {},
   mutations: {
+    getSlip(state, slipList) {
+      state.slipList = slipList;
+    },
+    loginCart(state, cartItem) {
+      state.cartList = cartItem;
+    },
+    createData(state, allData) {
+      state.allItem = allData;
+    },
+    login(state, user) {
+      state.loginUser = user;
+    },
+    addData(state, newItem) {
+      state.cartList.push(newItem);
+    },
     addQuantity(state, id) {
       state.cartList.find((item) => {
         if (item.itemId == id) {
@@ -186,14 +90,42 @@ export default new Vuex.Store({
         }
       });
     },
+    resetCart(state) {
+      state.cartList = [];
+    },
+    addSlip(state, newslip) {
+      state.slipList.push(newslip);
+    },
+    purchase(state, totalPrice) {
+      state.loginUser.money = state.loginUser.money - totalPrice;
+    },
   },
   actions: {
+    // hadleLogin({ commit }, loginId) {
+    //   const tmp = this.state.userList.find((user) => user.userId == loginId);
+    //   if (tmp != undefined) {
+    //     commit("login", tmp);
+    //   }
+    // },
     handleAdd({ commit }, itemId) {
       const check = this.state.cartList.some((item) => item.itemId == itemId);
       if (check == true) {
         commit("addQuantity", itemId);
       } else {
-        //commit("addData", itemId);
+        const tmp = this.state.allItem.find((item) => item.itemId == itemId);
+        if (tmp != undefined) {
+          const newItem: CartItem = {
+            cartItemId: this.state.cartList.length - 1,
+            itemId: itemId,
+            userId: "lk2889",
+            itemName: tmp.itemName,
+            genre: tmp.genre,
+            price: tmp.price,
+            img: tmp.img,
+            quantity: 1,
+          };
+          commit("addData", newItem);
+        }
       }
     },
     handleDel({ commit }, id) {
@@ -205,6 +137,27 @@ export default new Vuex.Store({
           commit("delQuantity", id);
         }
       }
+    },
+    handlePurchase({ commit }, { sendData, totalPrice }) {
+      const tmpDate = new Date();
+      const slip = {
+        slipId: this.state.slipList.length + 1,
+        userId: sendData.userId,
+        allItemName: "ItemName",
+        purchasePrice: totalPrice,
+        purchaseDate:
+          tmpDate.getMonth() +
+          1 +
+          "/" +
+          tmpDate.getDate() +
+          "  " +
+          tmpDate.getHours() +
+          ":" +
+          tmpDate.getMinutes(),
+      };
+      commit("addSlip", slip);
+      commit("resetCart");
+      commit("purchase", slip.purchasePrice);
     },
   },
   modules: {},

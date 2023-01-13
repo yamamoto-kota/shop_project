@@ -10,7 +10,7 @@
       </div>
       <font size="7px">
         <el-table :data="cartItem" style="width: 80%" class="cart">
-          <el-table-column fixed prop="itemName" label="商品名">
+          <el-table-column fixed prop="itemName" label="商品名" font-size="5px">
           </el-table-column>
           <el-table-column prop="price" label="価格"></el-table-column>
           <el-table-column>
@@ -38,11 +38,18 @@
               ></el-button> </template
           ></el-table-column>
         </el-table>
+        <nav>
+          <router-link to="/purchase"
+            ><el-button type="success" plain
+              >レジに進む ({{ itemCount }} 個の商品)</el-button
+            ></router-link
+          >
+        </nav>
       </font>
       <br />
       <!-- //商品詳細ダイアログ -->
       <el-dialog title="商品情報" :visible.sync="itemVisible">
-        <img :src="require(`@/assets/${itemditail.img}.png`)" class="image" />
+        <!-- <img :src="require(`@/assets/${itemditail.img}.png`)" class="image" /> -->
         <br />
         <font size="5px">
           {{ itemditail.itemName }} {{ itemditail.price }} 円</font
@@ -53,9 +60,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue, Watch, Prop } from "vue-property-decorator";
 import store, { CartItem } from "../store/index";
 import { Item } from "../store/index";
+import axios from "axios";
 
 @Component
 export default class AMAZONSHOP extends Vue {
@@ -63,7 +71,16 @@ export default class AMAZONSHOP extends Vue {
   itemVisible = false;
   defaultPrice = 0;
   space = "　 　";
+  count = 0;
+  get itemCount() {
+    this.count = 0;
+    for (var i = 0; i < store.state.cartList.length; i++) {
+      this.count = this.count + store.state.cartList[i].quantity;
+    }
+    return this.count;
+  }
   get totalPrice() {
+    this.defaultPrice = 0;
     for (var i = 0; i < store.state.cartList.length; i++) {
       this.defaultPrice =
         this.defaultPrice +
@@ -76,7 +93,7 @@ export default class AMAZONSHOP extends Vue {
     itemName: "",
     genre: "",
     price: 0,
-    img: "リンゴ",
+    img: "pan",
   };
 
   itemDialog(id: number) {
@@ -87,21 +104,29 @@ export default class AMAZONSHOP extends Vue {
     }
   }
 
-  addQuantity(itemId: number) {
+  async addQuantity(itemId: number) {
     store.commit("addQuantity", itemId);
     const tmp = store.state.cartList;
     if (tmp != undefined) {
       this.cartItem = tmp;
     }
+    const res = await axios.post(
+      "http://localhost:8080/addItem",
+      this.cartItem.find((item) => item.itemId == itemId)
+    );
   }
 
-  delQuantity(itemId: number) {
-    alert(itemId);
-    store.dispatch("handleDel", itemId);
+  async delQuantity(itemId: number) {
     const tmp = store.state.cartList;
     if (tmp != undefined) {
       this.cartItem = tmp;
     }
+    const res = await axios.post(
+      "http://localhost:8080/delItem",
+      this.cartItem.find((item) => item.itemId == itemId)
+    );
+    store.dispatch("handleDel", itemId);
+    this.cartItem = store.state.cartList;
   }
 }
 </script>

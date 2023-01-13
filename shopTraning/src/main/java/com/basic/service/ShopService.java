@@ -69,7 +69,8 @@ public class ShopService {
 	
 
 	public void cartReset(User loginUser) {
-//		int i = shopDao.delAllCart(loginUser);
+		String loginId = loginUser.getUserId();
+		int i = shopDao.delAllCart(loginId);
 		
 	}
 

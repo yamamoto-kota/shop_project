@@ -38,9 +38,10 @@ public interface ShopDao {
 
 	@Update
 	int updateMoney(User loginUser);
-//
-//	@Delete(sqlFile = true)
-//	int delAllCart(User loginUser);
+
+	@Delete(sqlFile = true)
+	int delAllCart(String loginId);
+
 
 	@Insert
 	int insertSlip(Slip slip);

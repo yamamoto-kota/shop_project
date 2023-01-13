@@ -1,6 +1,7 @@
 <!-- eslint-disable no-undef -->
 <template>
   <div class="index">
+    <br />
     <form action="#">
       <input type="text" />
       <input type="submit" value="検索" @click="search()" />
@@ -36,45 +37,64 @@
         </el-col>
       </div>
     </div>
-    <!-- //商品詳細ダイアログ -->
-    <el-dialog title="商品情報" :visible.sync="itemVisible">
-      <img :src="require(`@/assets/${itemditail.img}.png`)" class="image" />
-      <br />
-      <font size="5px">
-        {{ itemditail.itemName }} {{ itemditail.price }} 円</font
-      >
-      <br />
-      <el-button
-        type="primary"
-        plain
-        class="button"
-        @click="addCart(itemditail.itemId)"
-        >カートに追加</el-button
-      >
-    </el-dialog>
+    <div>
+      <!-- //商品詳細ダイアログ -->
+      <el-dialog title="商品情報" :visible.sync="itemVisible">
+        <!-- <img :src="require(`@/assets/${itemditail.img}.png`)" class="image2" /> -->
+        <img :src="require(`@/assets/${itemditail.img}.png`)" class="image" />
+        <br />
+        <font size="5px">
+          {{ itemditail.img }}
+          {{ itemditail.itemName }} {{ itemditail.price }} 円</font
+        >
+        <br />
+        <el-button
+          type="primary"
+          plain
+          class="button"
+          @click="addCart(itemditail.itemId)"
+          >カートに追加</el-button
+        >
+      </el-dialog>
+      <!-- <el-dialog title="商品情報" :visible.sync="searchDialog.visible">
+        <h1>dialogTest</h1>
+      </el-dialog> -->
+      <div><itemSearchDialog :visible.sync="searchDialogVisible" /></div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+import axios from "axios";
 import { Component, Vue, Watch } from "vue-property-decorator";
+import { component } from "vue/types/umd";
 import store, { CartItem } from "../store/index";
 import { Item } from "../store/index";
+import ItemSearchDialog from "../components/ItemSearchDialog.vue";
 
-@Component
+@Component({
+  components: {
+    itemSearchDialog: ItemSearchDialog,
+  },
+})
 export default class AMAZONSHOP extends Vue {
   displayItem: Item[] = store.state.allItem;
   itemVisible = false;
+  searchVisible = false;
+  logintest = store.state.loginUser.userId;
+  logintest2 = store.state.loginUser.money;
   cartItem: CartItem[] = store.state.cartList;
   itemditail: Item = {
     itemId: 5,
     itemName: "",
     genre: "",
     price: 0,
-    img: "リンゴ",
+    img: "pan",
   };
-
+  searchDialogVisible = false;
   search() {
-    this.displayItem = store.state.searchItem;
+    this.searchDialogVisible = true;
+    console.log("ssssssssss");
   }
 
   itemDialog(id: number) {
@@ -85,12 +105,16 @@ export default class AMAZONSHOP extends Vue {
     }
   }
 
-  addCart(itemId: number) {
+  async addCart(itemId: number) {
     store.dispatch("handleAdd", itemId);
     const tmp = store.state.cartList;
     if (tmp != undefined) {
       this.cartItem = tmp;
     }
+    const res = await axios.post(
+      "http://localhost:8080/addItem",
+      this.cartItem.find((item) => item.itemId == itemId)
+    );
   }
 }
 </script>

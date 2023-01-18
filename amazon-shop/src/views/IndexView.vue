@@ -3,8 +3,8 @@
   <div class="index">
     <br />
     <form action="#">
-      <input type="text" />
       <input type="submit" value="検索" @click="search()" />
+      <input type="submit" value="全商品表示" @click="getData()" />
     </form>
     <div class="box-parrent">
       <div class="box-child">
@@ -59,15 +59,21 @@
       <!-- <el-dialog title="商品情報" :visible.sync="searchDialog.visible">
         <h1>dialogTest</h1>
       </el-dialog> -->
-      <div><itemSearchDialog :visible.sync="searchDialogVisible" /></div>
+      <el-dialog title="商品検索" :visible.sync="searchDialogVisible">
+        <div>
+          <itemSearchDialog
+            :visible.sync="searchDialogVisible"
+            @close-dialog="closeDialog()"
+          />
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import axios from "axios";
-import { Component, Vue, Watch } from "vue-property-decorator";
-import { component } from "vue/types/umd";
+import { Component, Vue } from "vue-property-decorator";
 import store, { CartItem } from "../store/index";
 import { Item } from "../store/index";
 import ItemSearchDialog from "../components/ItemSearchDialog.vue";
@@ -78,9 +84,12 @@ import ItemSearchDialog from "../components/ItemSearchDialog.vue";
   },
 })
 export default class AMAZONSHOP extends Vue {
+  data: Item[] = store.state.allItem;
+  Item: Item[] = store.state.allItem;
   displayItem: Item[] = store.state.allItem;
   itemVisible = false;
   searchVisible = false;
+  radio = "All";
   logintest = store.state.loginUser.userId;
   logintest2 = store.state.loginUser.money;
   cartItem: CartItem[] = store.state.cartList;
@@ -94,7 +103,12 @@ export default class AMAZONSHOP extends Vue {
   searchDialogVisible = false;
   search() {
     this.searchDialogVisible = true;
-    console.log("ssssssssss");
+  }
+  //商品検索
+  async closeDialog() {
+    const res = await axios.get("http://localhost:8080/");
+    this.searchDialogVisible = false;
+    this.displayItem = store.state.allItem;
   }
 
   itemDialog(id: number) {
@@ -115,6 +129,12 @@ export default class AMAZONSHOP extends Vue {
       "http://localhost:8080/addItem",
       this.cartItem.find((item) => item.itemId == itemId)
     );
+  }
+  async getData() {
+    const res = await axios.get("http://localhost:8080/");
+    const viewData = res.data;
+    store.commit("createData", viewData);
+    this.displayItem = store.state.allItem;
   }
 }
 </script>

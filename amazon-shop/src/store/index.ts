@@ -1,4 +1,5 @@
 import { TimePicker } from "element-ui";
+import { userInfo } from "os";
 import Vue from "vue";
 import Vuex, { Store } from "vuex";
 
@@ -98,6 +99,16 @@ export default new Vuex.Store({
     },
     purchase(state, totalPrice) {
       state.loginUser.money = state.loginUser.money - totalPrice;
+    },
+    logout(state) {
+      state.loginUser = {
+        userId: "",
+        userName: "ゲスト",
+        address: "",
+        mail: "",
+        money: 0,
+        password: "",
+      };
     },
   },
   actions: {

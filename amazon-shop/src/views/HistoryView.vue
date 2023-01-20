@@ -50,6 +50,7 @@ export default class AMAZONSHOP extends Vue {
 
   async csvDownload(loginId: string) {
     const res = await axios.post("http://localhost:8080/csvDownload", loginId);
+    alert("購入履歴をダウンロードしました");
   }
 }
 </script>

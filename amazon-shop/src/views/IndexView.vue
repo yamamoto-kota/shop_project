@@ -11,7 +11,7 @@
         <el-col
           :span="5"
           v-for="(item, o, index) in displayItem"
-          :key="o"
+          :key="item"
           :offset="index > 0 ? 1 : 1"
           ><br />
           <el-card
@@ -35,6 +35,7 @@
             </div>
           </el-card>
         </el-col>
+        <br />
       </div>
     </div>
     <div>
@@ -144,8 +145,9 @@ export default class AMAZONSHOP extends Vue {
   color: #999;
 }
 
-.card {
+.el-card {
   height: auto;
+  color: black;
 }
 .image {
   width: 100%;

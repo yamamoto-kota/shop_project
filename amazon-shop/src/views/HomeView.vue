@@ -2,27 +2,39 @@
   <div class="home">
     <br />
     <br />
+    <createUserForm v-if="createUserForm" />
     <form action="#">
-      <nav>
+      <nav v-if="loginForm">
         ユーザーID <input type="text" v-model="loginId" />
-
         <router-link to="/index">
-          <input type="submit" value="ログイン" @click="login(loginId)" />
+          <input
+            type="submit"
+            value="ログイン"
+            @click="login(loginId), addUser()"
+          />
         </router-link>
+        <input type="submit" value="新規登録" @click="showCreateUserForm()" />
       </nav>
     </form>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Emit, Vue, Watch } from "vue-property-decorator";
 import store, { CartItem, Slip, User } from "../store/index";
 import { Item } from "../store/index";
 import axios from "axios";
 import { CarouselItem } from "element-ui";
+import CreateUserForm from "../components/CreateUserForm.vue";
 
-@Component
+@Component({
+  components: {
+    createUserForm: CreateUserForm,
+  },
+})
 export default class AMAZONSHOP extends Vue {
+  createUserForm = false;
+  loginForm = true;
   loginId = store.state.loginUser.userId;
   testData = "";
   newslip: Slip[] = store.state.slipList;
@@ -53,6 +65,15 @@ export default class AMAZONSHOP extends Vue {
     );
     this.newslip = slipList.data;
     store.commit("getSlip", this.newslip);
+  }
+  //新規ユーザー登録フォーム表示用
+  showCreateUserForm() {
+    this.createUserForm = true;
+    this.loginForm = false;
+  }
+  @Emit()
+  addUser() {
+    console.log("");
   }
 }
 </script>

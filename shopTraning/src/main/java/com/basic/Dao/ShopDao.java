@@ -8,6 +8,7 @@ import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
 import org.seasar.doma.Update;
 import org.seasar.doma.boot.ConfigAutowireable;
+import org.springframework.data.annotation.CreatedDate;
 
 import com.basic.entity.CartItem;
 import com.basic.entity.Item;
@@ -47,5 +48,12 @@ public interface ShopDao {
 	int insertSlip(Slip slip);
 
 	@Select
-	List<Slip> selectSlip(String loginId);	
+	List<Slip> selectSlip(String loginId);
+	
+	@Select
+	List<Item> selectsearchItem(String searchWord);
+
+	@Insert
+	int insertNewUser(User newUser);	
+	
 }

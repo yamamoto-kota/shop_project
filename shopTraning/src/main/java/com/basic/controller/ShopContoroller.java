@@ -20,6 +20,7 @@ import com.basic.entity.CartItem;
 import com.basic.entity.Item;
 import com.basic.entity.Slip;
 import com.basic.entity.User;
+import com.basic.entity.UserDTO;
 import com.basic.service.ShopService;
 
 
@@ -45,6 +46,14 @@ public class ShopContoroller {
 		loginUser = shopService.getLoginUser(loginId);
 		System.out.println(loginUser.getUserName());
 		return loginUser;
+	}
+	
+	@PostMapping("/searchItem")
+	public List<Item> serchItem(@RequestBody String searchWord,String radio){
+		List<Item> searchItem = new ArrayList<>(); 
+		searchItem = shopService.getsearchItem(radio,searchWord);
+		System.out.println(searchItem.get(0).getItemName());
+		return searchItem;
 	}
 	
 
@@ -96,19 +105,6 @@ public class ShopContoroller {
 		 OutputStreamWriter osw = null;
 		 BufferedWriter bw = null;
 		try {
-//			fos = new FileOutputStream("c:\\test\\購入履歴.csv");
-//			 
-//			 //BOM付与
-//			 fos.write(0xef);
-//			 fos.write(0xbb);
-//			 fos.write(0xbf);
-//			 
-//			 osw = new OutputStreamWriter(fos, "UTF-8");
-//			 bw = new BufferedWriter(osw);
-//			 
-//			 bw.write(csvData);
-//			byte[] bytes = csv.getBytes("SJIS");	
-//			String csvData = new String(bytes, "SJIS");
 			
 			 // 出力ファイルの作成
             FileWriter fw = new FileWriter("購入履歴.csv", false);
@@ -120,5 +116,10 @@ public class ShopContoroller {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@PostMapping("/createNewUser")
+	public void createUser(@RequestBody UserDTO newUser) {
+		shopService.createUser(newUser);
 	}
 }

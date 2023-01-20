@@ -12,6 +12,7 @@ import com.basic.entity.CartItem;
 import com.basic.entity.Item;
 import com.basic.entity.Slip;
 import com.basic.entity.User;
+import com.basic.entity.UserDTO;
 
 @Service
 public class ShopService {
@@ -120,6 +121,36 @@ public class ShopService {
 		
 		String csvData = csv.toString();
 		return csvData;
+	}
+
+
+	public List<Item> getsearchItem(String radio, String searchWord) {
+		List<Item> searchItem = new ArrayList<Item>();
+		//String sendradio = radio.replace("=","");
+		String sendsearchWord = searchWord.replace("=","");
+		searchItem = shopDao.selectsearchItem(sendsearchWord);
+		return searchItem;
+	}
+
+
+	public void createUser(UserDTO userDTO) {
+		
+		//DTOからEntityにセット
+		User newUser = new User();
+		newUser.setUserId(userDTO.getUserId());
+		newUser.setUserName(userDTO.getUserName());
+		newUser.setAddress(userDTO.getAddress());
+		newUser.setMail(userDTO.getMail());
+		newUser.setMoney(userDTO.getMoney());
+		
+		
+		System.out.println(userDTO.getUserName());
+		System.out.println(userDTO.getUserId());
+		System.out.println(userDTO.getAddress());
+		System.out.println(userDTO.getMail());
+		System.out.println(userDTO.getMoney());
+		
+		shopDao.insertNewUser(newUser);
 	}
 
 }

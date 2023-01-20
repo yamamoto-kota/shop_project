@@ -2,22 +2,23 @@ package com.basic.entity;
 
 import org.seasar.doma.Column;
 import org.seasar.doma.Entity;
-import org.seasar.doma.GeneratedValue;
-import org.seasar.doma.GenerationType;
 import org.seasar.doma.Id;
 import org.seasar.doma.Table;
 
-@Entity
-@Table(name = "USERLIST")
-public class User {
+public class UserDTO {
+
+	private String userId;
 	
-//	@Id
-//	@GeneratedValue(strategy =GenerationType.IDENTITY)
-//	@Column(name = "UNIQUEID")
-//	Integer uniqueId;
+	private String userName;
 	
-	@Column(name = "USERID")
-	String userId;
+	private String address;
+	
+	private String mail;
+	
+	private Integer money;
+	
+	private String password;
+	
 	
 	public String getUserId() {
 		return userId;
@@ -59,17 +60,14 @@ public class User {
 		this.money = money;
 	}
 
-	@Column(name = "USERNAME")
-	String userName;
-	
-	@Column(name = "ADDRESS")
-	String address;
-	
-	@Column(name = "MAIL")
-	String mail;
-	
-	@Column(name = "MONEY")
-	Integer money;
-	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
 	
 }

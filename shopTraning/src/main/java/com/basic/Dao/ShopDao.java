@@ -11,6 +11,7 @@ import org.seasar.doma.boot.ConfigAutowireable;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.basic.entity.CartItem;
+import com.basic.entity.CreateUser;
 import com.basic.entity.Item;
 import com.basic.entity.Slip;
 import com.basic.entity.User;
@@ -54,6 +55,6 @@ public interface ShopDao {
 	List<Item> selectsearchItem(String searchWord);
 
 	@Insert
-	int insertNewUser(User newUser);	
+	int insertNewUser(CreateUser newUser);	
 	
 }

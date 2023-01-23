@@ -9,11 +9,12 @@ import org.seasar.doma.Table;
 
 @Entity
 @Table(name = "USERLIST")
-public class User {
+public class CreateUser {
 	
-	@Id
-	@Column(name = "UNIQUEID")
-	Integer uniqueId;
+//	@Id
+//	@GeneratedValue(strategy =GenerationType.IDENTITY)
+//	@Column(name = "UNIQUEID")
+//	Integer uniqueId;
 
 	@Column(name = "USERID")
 	String userId;

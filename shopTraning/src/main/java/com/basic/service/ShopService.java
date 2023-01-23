@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.basic.Dao.ShopDao;
 import com.basic.entity.CartItem;
+import com.basic.entity.CreateUser;
 import com.basic.entity.Item;
 import com.basic.entity.Slip;
 import com.basic.entity.User;
@@ -19,14 +20,14 @@ public class ShopService {
 	@Autowired
 	private ShopDao shopDao;
 
-
+//商品一覧取得
 	public List<Item> getAllItem() {
 		List<Item> allItem = new ArrayList<Item>();
     	allItem = shopDao.selectAll();
 		return allItem;
 	}
 
-
+	//ログイン認証
 	public User getLoginUser(String id) {
 		User loginUser = new User();
 		String loginId = id.replace("=","");
@@ -35,7 +36,7 @@ public class ShopService {
 		return loginUser;
 	}
 
-
+//ログインしてるユーザーのカート情報取得
 	public List<CartItem> getCartItem(String id) {
 		List<CartItem> cartItem = new ArrayList<CartItem>();
 		String loginId = id.replace("=", "");
@@ -43,7 +44,7 @@ public class ShopService {
     	return cartItem;
 	}
 
-
+//カートに商品追加
 	public void addCartItem(CartItem newItem) {
 		if (newItem.getQuantity() == 1) {
 		int i = shopDao.insertCart(newItem);
@@ -52,7 +53,7 @@ public class ShopService {
 			}
 	}
 
-
+//カートの商品削除
 	public void delCartItem(CartItem newItem) {
 		if(newItem.getQuantity() == 1) {
 			int i = shopDao.delCartItem(newItem);
@@ -63,24 +64,24 @@ public class ShopService {
 
 	}
 
-
+//購入を所持金に反映
 	public void purchaseItem(User loginUser) {
 		int i = shopDao.updateMoney(loginUser);
 	}
 	
-
+//購入後カート内をリセット
 	public void cartReset(User loginUser) {
 		String loginId = loginUser.getUserId();
 		int i = shopDao.delAllCart(loginId);
 		
 	}
 
-
+//伝票作成
 	public void cartReset(Slip slip) {
 		int i = shopDao.insertSlip(slip);
 	}
 
-
+//ログインユーザーの伝票一覧取得
 	public List<Slip> getSlipList(String id) {
 	List<Slip> slipList = new ArrayList<>();
 	String loginId = id.replace("=", "");
@@ -88,7 +89,7 @@ public class ShopService {
 		return slipList;
 	}
 
-
+//csvファイルダウンロード
 	public String getcsvData(String id) {
 		String loginId = id.replace("=", "");
 		StringBuilder csv = new StringBuilder();
@@ -123,7 +124,7 @@ public class ShopService {
 		return csvData;
 	}
 
-
+//商品検索
 	public List<Item> getsearchItem(String radio, String searchWord) {
 		List<Item> searchItem = new ArrayList<Item>();
 		//String sendradio = radio.replace("=","");
@@ -132,11 +133,11 @@ public class ShopService {
 		return searchItem;
 	}
 
-
+//新規会員登録
 	public void createUser(UserDTO userDTO) {
 		
 		//DTOからEntityにセット
-		User newUser = new User();
+		CreateUser newUser = new CreateUser();
 		newUser.setUserId(userDTO.getUserId());
 		newUser.setUserName(userDTO.getUserName());
 		newUser.setAddress(userDTO.getAddress());

@@ -29,11 +29,16 @@
         <el-input v-model="confirmationPassword" type="password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button
-          type="primary"
-          @click="checkPass(newUser.password, confirmationPassword, newUser)"
-          >登録</el-button
-        >
+        <router-link to="/index">
+          <el-button
+            type="primary"
+            @click="
+              checkPass(newUser.password, confirmationPassword, newUser),
+                closeCreateUserForm()
+            "
+            >登録</el-button
+          >
+        </router-link>
       </el-form-item>
     </el-form>
   </div>
@@ -86,7 +91,12 @@ export default class CreateUserDialog extends Vue {
   //新規ユーザー情報登録
   async createNewUser(newUser: User) {
     await axios.post("http://localhost:8080/createNewUser", newUser);
-    alert("createUser");
+    alert("登録が完了しました");
+  }
+  //ユーザー登録画面閉じる
+  @Emit()
+  closeCreateUserForm() {
+    console.log("closeCreateUser");
   }
 }
 </script>

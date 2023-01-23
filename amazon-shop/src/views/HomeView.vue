@@ -2,7 +2,10 @@
   <div class="home">
     <br />
     <br />
-    <createUserForm v-if="createUserForm" />
+    <createUserForm
+      v-if="createUserForm"
+      @close-create-user-form="closeForm()"
+    />
     <form action="#">
       <nav v-if="loginForm">
         ユーザーID <input type="text" v-model="loginId" />
@@ -70,6 +73,12 @@ export default class AMAZONSHOP extends Vue {
   showCreateUserForm() {
     this.createUserForm = true;
     this.loginForm = false;
+  }
+  //新規ユーザー登録フォーム非表示用
+  closeForm() {
+    this.createUserForm = false;
+    this.loginForm = true;
+    alert("closeForm");
   }
   @Emit()
   addUser() {

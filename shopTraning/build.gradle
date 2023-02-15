@@ -23,7 +23,10 @@ dependencies {
     implementation "org.seasar.doma:doma:2.19.2"
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation "org.springframework.boot:spring-boot-starter-security"
 }
+
+ext['spring.version']='6.0.3'
 
 tasks.named('test') {
 	useJUnitPlatform()

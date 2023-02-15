@@ -8,12 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.basic.Dao.ShopDao;
-import com.basic.entity.CartItem;
-import com.basic.entity.CreateUser;
-import com.basic.entity.Item;
-import com.basic.entity.Slip;
-import com.basic.entity.User;
-import com.basic.entity.UserDTO;
+import com.basic.getEntity.GetCartItem;
+import com.basic.getEntity.GetPurchaseItem;
+import com.basic.getEntity.GetUser;
+import com.basic.getEntity.Item;
+import com.basic.getEntity.GetSlip;
+import com.basic.getEntity.GetUser;
+import com.basic.getEntity.UserDTO;
+import com.basic.sendEntity.PurchaseItem;
+import com.basic.sendEntity.SendCartItem;
+import com.basic.sendEntity.SendPurchaseItem;
+import com.basic.sendEntity.SendSlip;
+import com.basic.sendEntity.SendUser;
+import com.basic.sendEntity._SendPurchaseItem;
 
 @Service
 public class ShopService {
@@ -28,33 +35,48 @@ public class ShopService {
 	}
 
 	//ログイン認証
-	public User getLoginUser(String id) {
-		User loginUser = new User();
+	public GetUser getLoginUser(String id) {
+		GetUser loginUser = new GetUser();
 		String loginId = id.replace("=","");
-		System.out.println(loginId);
 		loginUser = shopDao.selectLoginUser(loginId);
 		return loginUser;
 	}
 
 //ログインしてるユーザーのカート情報取得
-	public List<CartItem> getCartItem(String id) {
-		List<CartItem> cartItem = new ArrayList<CartItem>();
+	public List<GetCartItem> getCartItem(String id) {
+		List<GetCartItem> cartItem = new ArrayList<GetCartItem>();
 		String loginId = id.replace("=", "");
 		cartItem = shopDao.selectCartItem(loginId);
     	return cartItem;
 	}
 
 //カートに商品追加
-	public void addCartItem(CartItem newItem) {
+	public void addCartItem(GetCartItem newItem) {
+		SendCartItem sendcartItem = new SendCartItem();
+		sendcartItem.setGenre(newItem.getGenre());
+		sendcartItem.setImg(newItem.getImg());
+		sendcartItem.setItemId(newItem.getItemId());
+		sendcartItem.setItemName(newItem.getItemName());
+		sendcartItem.setPrice(newItem.getPrice());
+		sendcartItem.setQuantity(newItem.getQuantity());
+		sendcartItem.setUserId(newItem.getUserId());
 		if (newItem.getQuantity() == 1) {
-		int i = shopDao.insertCart(newItem);
+		int i = shopDao.insertCart(sendcartItem);
 		}else if(newItem.getQuantity() > 1) {
-			int i = shopDao .updateCart(newItem);
+			int i = shopDao.updateCart(newItem);
 			}
 	}
 
 //カートの商品削除
-	public void delCartItem(CartItem newItem) {
+	public void delCartItem(GetCartItem newItem) {
+		SendCartItem sendcartItem = new SendCartItem();
+		sendcartItem.setGenre(newItem.getGenre());
+		sendcartItem.setImg(newItem.getImg());
+		sendcartItem.setItemId(newItem.getItemId());
+		sendcartItem.setItemName(newItem.getItemName());
+		sendcartItem.setPrice(newItem.getPrice());
+		sendcartItem.setQuantity(newItem.getQuantity());
+		sendcartItem.setUserId(newItem.getUserId());
 		if(newItem.getQuantity() == 1) {
 			int i = shopDao.delCartItem(newItem);
 		}else if(newItem.getQuantity() > 1) {
@@ -65,25 +87,25 @@ public class ShopService {
 	}
 
 //購入を所持金に反映
-	public void purchaseItem(User loginUser) {
+	public void purchaseItem(GetUser loginUser) {
 		int i = shopDao.updateMoney(loginUser);
 	}
 	
 //購入後カート内をリセット
-	public void cartReset(User loginUser) {
+	public void cartReset(GetUser loginUser) {
 		String loginId = loginUser.getUserId();
 		int i = shopDao.delAllCart(loginId);
 		
 	}
 
 //伝票作成
-	public void cartReset(Slip slip) {
+	public void createSlip(SendSlip slip) {
 		int i = shopDao.insertSlip(slip);
 	}
 
 //ログインユーザーの伝票一覧取得
-	public List<Slip> getSlipList(String id) {
-	List<Slip> slipList = new ArrayList<>();
+	public List<GetSlip> getSlipList(String id) {
+	List<GetSlip> slipList = new ArrayList<>();
 	String loginId = id.replace("=", "");
 	slipList = shopDao.selectSlip(loginId);
 		return slipList;
@@ -93,7 +115,7 @@ public class ShopService {
 	public String getcsvData(String id) {
 		String loginId = id.replace("=", "");
 		StringBuilder csv = new StringBuilder();
-		List<Slip> slipList = new ArrayList<>();
+		List<GetSlip> slipList = new ArrayList<>();
 		slipList = shopDao.selectSlip(loginId);
 		csv.append("\uFEFF");
 		csv.append("購入者ID");
@@ -103,7 +125,7 @@ public class ShopService {
 		csv.append("購入日");
 		csv.append("\n");
 
-		for(Slip s: slipList) {
+		for(GetSlip s: slipList) {
 			csv.append("\"");
 			csv.append(s.getUserId());
 			csv.append("\"");
@@ -127,31 +149,53 @@ public class ShopService {
 //商品検索
 	public List<Item> getsearchItem(String radio, String searchWord) {
 		List<Item> searchItem = new ArrayList<Item>();
-		//String sendradio = radio.replace("=","");
 		String sendsearchWord = searchWord.replace("=","");
 		searchItem = shopDao.selectsearchItem(sendsearchWord);
 		return searchItem;
 	}
 
 //新規会員登録
-	public void createUser(UserDTO userDTO) {
+	public GetUser createUser(UserDTO userDTO) {
 		
 		//DTOからEntityにセット
-		CreateUser newUser = new CreateUser();
+		SendUser newUser = new SendUser();
 		newUser.setUserId(userDTO.getUserId());
 		newUser.setUserName(userDTO.getUserName());
 		newUser.setAddress(userDTO.getAddress());
 		newUser.setMail(userDTO.getMail());
 		newUser.setMoney(userDTO.getMoney());
-		
-		
-		System.out.println(userDTO.getUserName());
-		System.out.println(userDTO.getUserId());
-		System.out.println(userDTO.getAddress());
-		System.out.println(userDTO.getMail());
-		System.out.println(userDTO.getMoney());
-		
+		//DBに登録
 		shopDao.insertNewUser(newUser);
+		
+		//登録した情報を画面に返す
+		GetUser newLoginUser = new GetUser();
+		newLoginUser = shopDao.selectLoginUser(newUser.getUserId());
+		return newLoginUser;
+		
+	}
+	//購入履歴詳細取得
+	public List<GetPurchaseItem> getPurchaseList(int slipId) {
+		List<GetPurchaseItem> purchaseList = new ArrayList<>();
+		purchaseList = shopDao.selectPurchaseItem(slipId);
+		return purchaseList;
+		
+	}
+//購入商品登録
+	public void addPurchaseItem(List<GetCartItem> cartItemList) {
+		for(GetCartItem gci: cartItemList) {
+			SendPurchaseItem purchaseItem = new SendPurchaseItem();
+			purchaseItem.setGenre(gci.getGenre());
+			purchaseItem.setImg(gci.getImg());
+			purchaseItem.setItemId(gci.getItemId());
+			purchaseItem.setItemName(gci.getItemName());
+			purchaseItem.setPrice(gci.getPrice());
+			purchaseItem.setQuantity(gci.getQuantity());
+			purchaseItem.setUserId(gci.getUserId());
+			List<GetSlip> lastSlip = new ArrayList<>();
+			lastSlip = shopDao.selectMaxSlipId(gci.getUserId());
+			purchaseItem.setSlip(lastSlip.get(0).getSlipId());
+			shopDao.insertPurchaseItem(purchaseItem);
+		}
 	}
 
 }

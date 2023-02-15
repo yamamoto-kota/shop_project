@@ -2,6 +2,8 @@ package com.basic.Dao;
 
 import java.util.List;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import org.seasar.doma.Dao;
 import org.seasar.doma.Delete;
 import org.seasar.doma.Insert;
@@ -10,11 +12,17 @@ import org.seasar.doma.Update;
 import org.seasar.doma.boot.ConfigAutowireable;
 import org.springframework.data.annotation.CreatedDate;
 
-import com.basic.entity.CartItem;
-import com.basic.entity.CreateUser;
-import com.basic.entity.Item;
-import com.basic.entity.Slip;
-import com.basic.entity.User;
+import com.basic.getEntity.GetCartItem;
+import com.basic.getEntity.GetPurchaseItem;
+import com.basic.getEntity.GetUser;
+import com.basic.getEntity.Item;
+import com.basic.sendEntity.PurchaseItem;
+import com.basic.sendEntity.SendCartItem;
+import com.basic.sendEntity.SendPurchaseItem;
+import com.basic.sendEntity.SendSlip;
+import com.basic.sendEntity.SendUser;
+import com.basic.getEntity.GetSlip;
+import com.basic.getEntity.GetUser;
 
 @Dao
 @ConfigAutowireable
@@ -24,37 +32,47 @@ public interface ShopDao {
 	List<Item> selectAll();
 
 	@Select
-	User selectLoginUser(String loginId);
+	GetUser selectLoginUser(String loginId);
 
 	@Select
-	List<CartItem> selectCartItem(String loginId);
+	List<GetCartItem> selectCartItem(String loginId);
 
 	@Insert
-	int insertCart(CartItem newItem);
+	int insertCart(SendCartItem newItem);
 
 	@Update
-	int updateCart(CartItem newItem);
+	int updateCart(GetCartItem newItem);
 
 	@Delete
-	int delCartItem(CartItem newItem);
+	int delCartItem(GetCartItem newItem);
 
 	@Update
-	int updateMoney(User loginUser);
+	int updateMoney(GetUser loginUser);
 
 	@Delete(sqlFile = true)
 	int delAllCart(String loginId);
 
-
 	@Insert
-	int insertSlip(Slip slip);
+	int insertSlip(SendSlip slip);
+	
+//	@Insert
+//	org.seasar.doma.jdbc.Result<GetSlip> insertSlip(SendSlip slip);
 
 	@Select
-	List<Slip> selectSlip(String loginId);
+	List<GetSlip> selectSlip(String loginId);
 	
 	@Select
 	List<Item> selectsearchItem(String searchWord);
 
 	@Insert
-	int insertNewUser(CreateUser newUser);	
-	
+	int insertNewUser(SendUser newUser);
+
+	@Insert
+	int insertPurchaseItem(SendPurchaseItem purchaseItem);
+
+	@Select
+	List<GetPurchaseItem> selectPurchaseItem(int slipId);
+
+	@Select
+	List<GetSlip> selectMaxSlipId(String userId);
 }

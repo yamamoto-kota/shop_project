@@ -1,4 +1,4 @@
-package com.basic.entity;
+package com.basic.getEntity;
 
 import org.seasar.doma.Column;
 import org.seasar.doma.Entity;
@@ -7,7 +7,7 @@ import org.seasar.doma.Table;
 
 @Entity
 @Table(name = "SLIP")
-public class Slip {
+public class GetSlip {
 
 	@Id
 	@Column(name = "SLIPID")

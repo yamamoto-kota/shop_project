@@ -1,4 +1,4 @@
-package com.basic.entity;
+package com.basic.getEntity;
 
 import org.seasar.doma.Column;
 import org.seasar.doma.Entity;
@@ -9,7 +9,7 @@ import org.seasar.doma.Table;
 
 @Entity
 @Table(name = "USERLIST")
-public class User {
+public class GetUser {
 	
 	@Id
 	@Column(name = "UNIQUEID")

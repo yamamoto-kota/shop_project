@@ -1,4 +1,4 @@
-package com.basic.entity;
+package com.basic.getEntity;
 
 import org.seasar.doma.Column;
 import org.seasar.doma.Entity;

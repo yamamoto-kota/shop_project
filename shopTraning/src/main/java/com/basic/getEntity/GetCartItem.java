@@ -1,4 +1,4 @@
-package com.basic.entity;
+package com.basic.getEntity;
 
 import org.seasar.doma.Column;
 import org.seasar.doma.Entity;
@@ -9,7 +9,7 @@ import org.seasar.doma.Table;
 
 @Entity
 @Table(name = "CARTITEM")
-public class CartItem {
+public class GetCartItem {
 	
 	public String getUserId() {
 		return userId;
